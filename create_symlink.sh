@@ -1,6 +1,6 @@
 #! /bin/sh
-echo ${dirname}
-cd ${dirname $0}
+echo $(dirname)
+cd $(dirname $0)
 
 for dotfile in .?*;do
     case $dotfile in

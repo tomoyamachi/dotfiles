@@ -1,4 +1,4 @@
-export PATH=$HOME/dotfiles/shells:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/dotfiles/shells:$PATH
 alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
 
 alias sbash="source $HOME/.bash_profile"
