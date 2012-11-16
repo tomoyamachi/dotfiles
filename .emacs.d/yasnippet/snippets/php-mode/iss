@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : isset
+# --
+isset(\$$0)

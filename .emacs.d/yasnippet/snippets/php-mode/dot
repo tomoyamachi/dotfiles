@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : snippet-app/dot
+# --
+App::snippet('app/dot')->${1:setClass('${2:text-middle}')->}${3:setUsedevice('${4:sp}')}->render();

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : php
+# --
+<?php
+$0
+?>

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : array
+# --
+array(
+  '${1:first}',
+  '$0',
+);

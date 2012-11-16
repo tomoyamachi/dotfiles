@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : p
+# --
+<input type="${2:type}" name="${1:name}" $0 />

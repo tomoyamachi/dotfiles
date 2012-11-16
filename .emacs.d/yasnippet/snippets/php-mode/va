@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : variable and arrow
+# --
+\$${1:name}->$0

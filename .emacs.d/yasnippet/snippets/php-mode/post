@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : get
+# --
+$_POST['$0']

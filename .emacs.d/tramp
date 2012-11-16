@@ -1,0 +1,56 @@
+;; -*- emacs-lisp -*- <12/11/16 10:03:14 /Users/amachitomoya/.emacs.d/tramp>
+;; Tramp connection history.  Don't change this file.
+;; You can delete it, forcing Tramp to reapply the checks.
+
+((["sudo" "root" "tenchi-no-iMac.local" nil nil]
+  ("uname" "Darwin 11.4.0")
+  ("test" "test")
+  ("remote-path"
+   ("/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/bin"))
+  ("busybox" nil)
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("stat" nil)
+  ("ls" "/bin/ls")
+  ("readlink" nil)
+  ("id" "/usr/bin/id")
+  ("gid-integer" 0)
+  ("uid-integer" 0))
+ (["ssh" nil "dev_bkrs" nil nil]
+  ("uname" "Linux 2.6.18-194.el5xen")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("busybox" nil)
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("stat" "\\stat")
+  ("id" "/usr/bin/id")
+  ("gid-integer" 100)
+  ("readlink" "\\readlink")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("ls" "/bin/ls --color=never")
+  ("uid-integer" 1051))
+ (["ssh" "amachi" "bkrs2" nil nil]
+  ("uname" "Linux 2.6.18-194.el5xen")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("busybox" nil)
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("stat" "\\stat")
+  ("id" "/usr/bin/id")
+  ("gid-integer" 100)
+  ("readlink" "\\readlink")
+  ("ls" "/bin/ls --color=never")
+  ("uid-integer" 1051)
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("ls-dired" t)))

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+#name : switch
+# --
+switch (\$${1:value}) {
+  case '${2:firstCondition}':
+    echo '${3:firstEcho}' , PHP_EOL;
+    break;
+  case '${4:secondCondition}':
+    echo '${5:secondEcho}' , PHP_EOL;
+    break;
+  case '${6:thirddCondition}':
+    echo '${7:thirdEcho}' , PHP_EOL;
+    break;
+  default:
+    echo '$0' , PHP_EOL;
+    break;
+}

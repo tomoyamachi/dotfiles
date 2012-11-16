@@ -1,4 +1,7 @@
+[[ $EMACS = t ]] && unsetopt zle
+/bin/zsh
 export PATH=$HOME/dotfiles/shells:$PATH
+##canythings
 alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
 
 alias sbash="source $HOME/.bash_profile"

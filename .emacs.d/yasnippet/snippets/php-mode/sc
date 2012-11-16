@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : setColor
+# --
+setColor(¥$${1:color})
+$0

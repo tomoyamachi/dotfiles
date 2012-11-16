@@ -14,16 +14,34 @@ case "${OSTYPE}" in
         alias se="sudo emacsclient -n"
         ;;
 esac
+[[ $EMACS = t ]] && unsetopt zle
+export PATH=$HOME/shells:$HOME/dotfiles/shells:$PATH
+alias cddev='cd "/Volumes/プロジェクト/ぼくレス/特集/"'
+alias cdcd='cd "/Volumes/プロジェクト/ぼくレス外伝/特集/"'
+alias cdcampaign='cd "/Volumes/外部/横断プロモーション/"'
 
 alias bkrs="ssh amachi@bkrs2"
-export DOTFILE="${HOME}/dotfiles"
-alias sbash="source ${DOTFILE}/.zshrc"
+alias sbash="source $HOME/.zshrc"
 alias pe="ps -ax | grep Emacs"
 #. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
-export PATH="$(brew --prefix)/bin:$PATH"
 
 # tmux
+alias -g CA='| canything'
+# tmuxでの移動
+alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
+function chpwd(){
+  [ -n $TMUX ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD /bin/zsh
+}
+
+# #tmuxでsshが破棄されてもWindowをとじない
+# function ssh_tmux() {
+#   eval server=\${$#}
+#   tmux set set-remain-on-exit on\; \
+#       new-window -n s:$server "ssh $*"\; \
+#       set set-remain-on-exit off > /dev/null
+# }
+
 # ホスト毎に色を変えたい場合
 # if [ "$TMUX" != "" ]; then
 #     tmux set-option status-bg colour$(($(echo -n $(whoami)@$(hostname) | sum | cut -f1 -d' ') % 8 + 8)) | cat > /dev/null
@@ -72,7 +90,7 @@ setopt chase_links # シンボリックリンクは実体を追うようにな�
 ## 移動先を検索するリスト。
 cdpath=(~)
 ## ディレクトリが変わったらディレクトリスタックを表示。
-chpwd_functions=($chpwd_functions dirs)
+#chpwd_functions=($chpwd_functions dirs)
 
 
 setopt correct # command correct edition before each completion attempt

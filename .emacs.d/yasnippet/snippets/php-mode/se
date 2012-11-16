@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : $snpt = App::snippet('text')
+# --
+$snpt = App::snippet( 'text' )->setColor( ¥'${1:color}¥' )->setAlign(¥'${2:center}¥');
+$snpt = $0
+$snpt->render();
