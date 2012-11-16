@@ -1,0 +1,39 @@
+#/bin/bash
+# 引数 official_id
+echo "webパーツをコピーします. "
+
+if [ "$1" ]; then
+
+    count=`find . -name "*.jpg" | wc -l`
+    if [ $count -gt 0 ];
+    then
+       scp -iv ./web/*.jpg amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+       scp -iv ./web/fp/*.jpg amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+       scp -iv ./web/sp/*.jpg amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+    fi
+
+    count=`find . -name "*.gif" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+        # スタンプの時
+        scp -iv ./web/fp/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+        scp -iv ./web/sp/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/
+
+        scp -iv ./web/fp/stamps/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/stamps/
+        scp -iv ./web/sp/stamps/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/official/company/$1/stamps/
+    fi
+
+    count=`find . -name "*.png" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/back.png amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/back/360/of_$1.png
+        scp -iv ./web/frame.png amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/frame/360/of_$1.png
+    fi
+
+    ssh bkrs2 sh "~/shells/chmod.sh $1"
+
+else
+    echo "company_idを指定してください"
+    exit 1
+fi

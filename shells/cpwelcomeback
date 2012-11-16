@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+if [ "$1" ];then
+    cd "web"
+
+    find . -type f -name "*\.gif" | while read f;do
+        scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/welcomeback/$1/$f
+    done
+    ssh bkrs2 sh "~/shells/chmod.sh"
+    wait
+else
+    echo 'IDを指定してください'
+    exit 0
+fi

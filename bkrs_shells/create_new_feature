@@ -1,0 +1,26 @@
+#!/bin/bash
+echo "特集の種類を指定してください(king|collect|medal)"
+read feature_type
+echo "つくりたい特集IDを指定してください(数字)"
+read new_feature_id
+echo "コピー元の特集IDを指定してください(数字)"
+read old_feature_id
+
+CHECK_NEW=`echo -n $new_feature_id|sed 's/[0-9]//g'`
+CHECK_OLD=`echo -n $old_feature_id|sed 's/[0-9]//g'`
+
+if [ "$feature_type" = 'king' -o "$feature_type" = 'collect' -o "$feature_type" = 'medal' ]; then
+    # 数字でなければエラー
+    if [ $CHECK_NEW -a $CHECK_OLD ]
+    then
+        cd $VIEWS/scripts/$feature_type/$old_feature_id
+    else
+        echo '特集IDは数字で指定してください'
+        exit 0
+    fi
+    
+else
+    echo '特集の種類が不正です'
+    exit 0
+fi
+

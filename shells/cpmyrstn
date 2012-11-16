@@ -1,0 +1,56 @@
+#!/bin/bash
+echo -n "system_Myﾚｽﾄﾗﾝをコピーしますか? [y/n] : "
+read y
+set -e
+if [ $y = 'y' -o $y = 'yes' ];then
+    cd "アイテム/system_Myﾚｽﾄﾗﾝ"
+#    cd "./system_Myレストラン"
+#    cd "./System_Myﾚｽﾄﾗﾝ"
+    find . -type f -name "*\.swf" | while read f;do
+        check_swf $f
+        echo amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$f
+        scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$f
+    done
+
+    # ↑のwhile文が異常終了した場合、exit
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+
+    find . -type f -name "*\.png" | while read f;do
+        # uniform1にある画像は、uniformフォルダにいれる
+        if [ `echo $f | grep uniform1` ] ; then
+            newfile=`echo  $f | sed "s/uniform1/uniform/g"`
+            scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$newfile
+        elif [ `echo $f | grep uniform2` ] ; then
+            # uniform2にある画像は、uniform_2フォルダにいれる
+            newfile=`echo  $f | sed "s/uniform2/uniform_2/g"`
+            scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$newfile
+        else
+            scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$f
+        fi
+    done
+
+    non_flag=1
+    find . -type f -name "*\.gif" | while read f;do
+        scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/bin/bkrs2/master/image/myrstn/$f
+
+        #pathにpetが含まれているgif画像ならpet以下に、そうでなければ適宜適当なフォルダに
+        if expr "$f" : "pet" >/dev/null; then
+            scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/public/inline/in_myrstn/item/pet/$f
+        else
+            scp -iv $f amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/public/inline/in_myrstn/item/$f
+        fi
+        non_flag=1
+    done
+
+    if [ $non_flag = 1 ];then
+        ssh bkrs2 sh "~/shells/chmod.sh"
+    fi
+
+    ssh bkrs2 sh "~/shells/mkphp.sh myrstn"
+    wait
+else
+    echo 'Bye'
+    exit 0
+fi

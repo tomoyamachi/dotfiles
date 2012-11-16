@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+	echo コピー元と、コピー先ののfeature_idを指定してください
+	exit;
+fi
+
+for f in "$1"*.png;do;
+newfile=`echo "$f" | sed -r 's/$1/$2/'`;
+cp "$f" "$newfile";
+done
+
+

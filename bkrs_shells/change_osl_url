@@ -1,0 +1,2 @@
+#!/bin/sh
+sed -e "s/<a href"'\s\?.\s\?\(.*\)\s\?\s\?'">/<a href="' . \$osl->link(\1) .'">/"

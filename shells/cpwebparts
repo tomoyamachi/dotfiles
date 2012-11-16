@@ -1,0 +1,51 @@
+#/bin/bash
+# 引数 feature_id
+while getopts h: OPT
+do
+    case $OPT in
+        h)  echo "Webパーツのコピー。Usage : sp プロジェクトフォルダ名のヒント" 1>&2 ;;
+        \?) echo "webパーツのコピー。Usage : cpwebparts 特集id" 1>&2
+            exit 1 ;;
+    esac
+done
+
+echo "webパーツをコピーします. "
+
+if [ "$1" ]; then
+    ssh bkrs2 sh "~/shells/mkdir_web.sh $1"
+
+    count=`find . -name "*.jpg" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/*.jpg amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/feature/$1/
+    fi
+    count=`find . -name "*.gif" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/*.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/feature/$1/
+#        scp -iv ./web/banner_q.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/gacha/banner/gacha_$1_q.gif
+#        scp -iv ./web/banner_v.gif amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/gacha/banner/gacha_$1_v.gif
+    fi
+    count=`find . -name "*.swf" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/*.swf amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/feature/$1/
+    fi
+    count=`find . -name "*.png" | wc -l`
+    if [ $count -gt 0 ];
+    then
+        scp -iv ./web/back.png amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/back/360/$1.png
+        scp -iv ./web/frame.png amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/frame/360/$1.png
+    fi
+
+    # find . -type f -name "*\.png" -o -name "*\.swf" | while read f;do
+    #     echo $f
+    #     scp $f amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/feature/$1
+    # done
+
+    ssh bkrs2 sh "~/shells/chmod.sh $1"
+
+else
+    echo "特集idを指定してください"
+    exit 1
+fi

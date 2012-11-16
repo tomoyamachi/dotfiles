@@ -1,0 +1,44 @@
+#/bin/sh -x
+## USAGE
+CMDNAME='basename $0'
+FOLDER=$1 # 切り出し元のフォルダ名
+OLDFILE=$2 # 切り出したいファイル名のヒント
+STEP=$3   # 何枚の動画にしたいか
+PWD=`pwd`
+
+while getopts cvtiml: OPT
+do
+    case $OPT in
+        \?) echo "Usage : $0 1.フォルダ名 2.ファイル名のヒント(頭の数文字) 3.何枚の紙芝居にするか" 1>&2
+            exit 1 ;;
+    esac
+done
+
+
+FILEPATH="$PWD/$FOLDER/"
+echo "$FILEPATH"
+# ふつうに数えた結果だけだと、改行記号などがはいるので、sedで数字だけにする
+FILENUM=`ls -1 "$FILEPATH" | wc -l | sed "s/[^0-9]//g"`
+DIVIDENUM=`expr "$FILENUM" / "$STEP"`
+
+echo $DIVIDENUM
+cnt=1
+newfilename=1
+# 切り出ししたい画像のヒントをもとにあたらしい画像をつくる
+for f in $FILEPATH/$OLDFILE*
+do
+    if  [ `expr $cnt % $DIVIDENUM` -eq 1 ];then
+        #SUFFIX=`expr "$f" : "$FILEPATH/$OLDFILE\(.*\)"`
+        mv "$f" $FILEPATH/$newfilename.png
+        newfilename=`expr $newfilename + 1`
+    else
+        rm "$f"
+    fi
+    cnt=`expr $cnt + 1`
+done
+
+# for i in $OLD*
+# do
+#   SUFFIX=`expr "$FOLDER$i" : "$FOLDER$OLD\(.*\)"`
+#   $SUFFIX
+# done
