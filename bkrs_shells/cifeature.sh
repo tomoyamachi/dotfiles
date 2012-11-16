@@ -15,13 +15,13 @@ if [ "$1" ]; then
         svn add $addstr
     fi
 
-    str=`svn st $PROJ/bin/bkrs2/master/image/ | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`
-    str="$str `svn st $PROJ/share/www/bkrs2/resource/ | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`"
-    str="$str `svn st $PROJ/share/www/bkrs2/public/inline/in_myrstn | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`"
-    str="$str `svn st $PROJ/share/www/bkrs2-turbine/resource/myrstn | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`"
-    str="$str `svn st $PROJ/share/www/img/public/img | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`"
-    str="$str `svn st $PROJ/share/www/img/public/img-sp | grep -vE "php" | sed -e s/"^.[ ]*\+?"//`"
-    str="$str `svn st $PROJ/share/www/bkrs2/application/modules/main/views/scripts/gimmick/html | grep -vE "php" | sed -e s/"^.[ ]*"//`"
+    str=`svn st $PROJ/bin/bkrs2/master/image/ | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`
+    str="$str `svn st $PROJ/share/www/bkrs2/resource/ | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`"
+    str="$str `svn st $PROJ/share/www/bkrs2/public/inline/in_myrstn | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`"
+    str="$str `svn st $PROJ/share/www/bkrs2-turbine/resource/myrstn | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`"
+    str="$str `svn st $PROJ/share/www/img/public/img | grep -vE "php"  | perl -nle 's/.\s*\+?//;print $_'`"
+    str="$str `svn st $PROJ/share/www/img/public/img-sp | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`"
+    str="$str `svn st $PROJ/share/www/bkrs2/application/modules/main/views/scripts/gimmick/html | grep -vE "php" | perl -nle 's/.\s*\+?//;print $_'`"
 
     str=`echo $str | sed 's/^ *//g'`
     echo $str
