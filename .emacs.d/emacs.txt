@@ -1,0 +1,302 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;load-path設定;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq load-path (append
+                 '("~/.emacs.d"
+                   "/usr/share/emacs/23/site-lisp/erlang"
+                   "/usr/share/emacs/23/site-lisp/prolog-el"
+                   "/usr/local/share/emacs/23.2/site-lisp/skk")
+                 load-path))
+;;;~/.emacs.d/以下のディレクトリをすべてload-pathに追加;;;;;;;;;;;;;;;;;;;
+(require 'cl)
+(loop for f in (directory-files "~/.emacs.d" t)
+      when (and (file-directory-p f)
+		(not (member (file-name-nondirectory f) '("." ".."))))
+      do (add-to-list 'load-path f))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;基本設定;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-key global-map (kbd "C-h") 'delete-backward-char) ; 削除
+(define-key global-map (kbd "M-?") 'help-for-help)        ; ヘルプ
+(define-key global-map (kbd "C-z") 'undo)                 ; undo
+(define-key global-map (kbd "C-c i") 'indent-region)      ; インデント
+(define-key global-map (kbd "C-c C-i") 'hippie-expand)    ; 補完
+(define-key global-map (kbd "C-c ;") 'comment-dwim)       ; コメントアウト
+(define-key global-map (kbd "C-o") 'toggle-input-method)  ; 日本語入力切替
+(define-key global-map (kbd "M-C-g") 'grep)               ; grep
+;;; ツールバーを出さない
+(tool-bar-mode 0)
+;;; バックアップファイルを作らない
+(setq backup-inhibited t)
+;;; オートセーブファイルを作らない
+(setq auto-save-dafault nil)
+;;; 行末の空白を保存前に削除。
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;;; 補完可能なものを随時表示
+(icomplete-mode 1)
+;;; カーソルの位置を表示する
+(column-number-mode t)
+(line-number-mode t)
+;;; セッションを保存する
+;;; 初めは手動でM-x desktop-saveしなければいけない
+(desktop-load-default)
+(desktop-read)
+;; C-x bでミニバッファにバッファ候補を表示
+(iswitchb-mode t)
+(iswitchb-default-keybindings)
+;; terminalでファイルを開くときにemacsで開けるようにする
+;; .bashrcに「alias e='emacsclient -n'」と書く
+(if window-system (server-start))
+;; カーソル行をハイライト
+(defface hlline-face
+  '((((class color)
+      (background dark))
+     (:background "white"))
+    (((class color)
+      (background light))
+     (:background "gray"))
+    (t
+     ()))
+  "*Face used by hl-line.")
+(setq hl-line-face 'hlline-face)
+(global-hl-line-mode)
+;; バッファ一覧の情報をさらに表示
+(global-set-key "\C-x\C-b" 'bs-show)
+;; 起動時のメッセージを非表示
+(setq inhibit-startup-message t)
+;;; yes_or_no=>y_or_n
+(defalias 'yes_or_no_p 'y_or_n_p)
+(setq history-length 1000)
+(setq gc-cons-threshold (* 10 gc-cons-threshold))
+(transient-mark-mode 1)
+;; 行をコピーするコマンド
+(defun copy-line (&optional arg)
+  (interactive "p")
+  (copy-region-as-kill
+   (line-beginning-position)
+   (line-beginning-position (1+ (or arg 1))))
+  (message "Line copied"))
+;; リージョンを選択していないときに行をキルするコマンド
+(defadvice kill-region (around kill-line-or-kill-region activate)
+  (if (and (interactive-p) transient-mark-mode (not mark-active))
+      (kill-whole-line)
+    ad-do-it))
+;; リージョンを選択していないときに行をコピーするコマンド
+(defadvice kill-ring-save (around kill-line-save-or-kill-ring-save activate)
+  (if (and (interactive-p) transient-mark-mode (not mark-active))
+      (copy-line)
+    ad-do-it))
+;; 括弧を自動で挿入
+;; ref: http://www.emacswiki.org/cgi-bin/wiki/SkeletonMode
+(require 'skeleton)
+(setq skeleton-pair t)
+(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "`") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+(add-to-list 'skeleton-pair-alist '(?「 _ ?」))
+(global-set-key (kbd "「") 'skeleton-pair-insert-maybe)
+
+;;;shiftキーではなく、「;→アルファベット」で大文字に変換。
+;;;http://homepage1.nifty.com/blankspace/emacs/sticky.html
+(defvar sticky-key ";")
+(defvar sticky-list
+  '(("a" . "A")("b" . "B")("c" . "C")("d" . "D")("e" . "E")("f" . "F")("g" . "G")
+    ("h" . "H")("i" . "I")("j" . "J")("k" . "K")("l" . "L")("m" . "M")("n" . "N")
+    ("o" . "O")("p" . "P")("q" . "Q")("r" . "R")("s" . "S")("t" . "T")("u" . "U")
+    ("v" . "V")("w" . "W")("x" . "X")("y" . "Y")("z" . "Z")
+    ("1" . "!")("2" . "\"")("3" . "#")("4" . "$")("5" . "%")("6" . "&")("7" . "\'")
+    ("8" . "(")("9" . ")")("0" . "=")
+    ("`" . "~")("[" . "{")("]" . "}")("-" . "_")("=" . "+")("," . "<")("." . ">")
+    ("/" . "?")("@" . "=")("\\" . "|")
+    ))
+(defvar sticky-map (make-sparse-keymap))
+(define-key global-map sticky-key sticky-map)
+(mapcar (lambda (pair)
+          (define-key sticky-map (car pair)
+            `(lambda()(interactive)
+               (setq unread-command-events
+                     (cons ,(string-to-char (cdr pair)) unread-command-events)))))
+        sticky-list)
+(define-key sticky-map sticky-key '(lambda ()(interactive)(insert sticky-key)))
+
+;; set language Japanese
+(set-language-environment 'Japanese)
+;; UTF-8
+(prefer-coding-system 'utf-8)
+;; 起動時のウィンドウについて設定
+(if window-system (progn
+                    (setq initial-frame-alist '((width . 150)(height . 75)(top . 100)(left . 40)))
+                    (set-background-color "White")
+                    (set-foreground-color "Black")
+                    (set-cursor-color "Gray")
+                    ))
+(global-set-key "\C-m" 'newline-and-indent);; 改行時にインデント
+;; Tabの代わりにスペースでインデント
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2 indent-tabs-mode nil)
+;; 対応する括弧を光らせる。
+(show-paren-mode 1)
+(set-face-attribute 'default nil
+                    :height 100)
+;;; line-number
+(require 'linum)
+(global-linum-mode t)
+(setq linum-format "%5d")
+
+;;;マウススクロールをスムーズに
+;; (defun smooth-scroll (number-lines increment)
+;;   (if (= 0 number-lines)
+;;       t
+;;     (progn
+;;       (sit-for 0.02)
+;;       (scroll-up increment)
+;;        (smooth-scroll (- number-lines 1) increment))))
+;; (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 6 1)))
+;; (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll 6 -1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;for package;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;ddskk
+(require 'skk-autoloads)
+(global-set-key "\C-x\C-j" 'skk-mode)
+(global-set-key "\C-xj" 'skk-auto-fill-mode)
+(global-set-key "\C-xt" 'skk-tutorial)
+(setq skk-show-inline t)
+(setq skk-large-jisho "~/.emacs.d/skk-jisyo/SKK-JISYO.ML")
+(setq skk-egg-like-newline t)
+(setq skk-auto-insert-paren t)
+(setq skk-dcomp-activate t)
+(require 'skk-study)
+(setq skk-rom-kana-rule-list
+  (nconc skk-rom-kana-rule-list
+    '((";" nil nil)
+      (":" nil nil)
+      ("?" nil nil)
+      ("!" nil nil)
+)))
+;;辞書 skk サーバ用の設定
+(setq skk-server-host "127.0.0.1")
+(setq skk-server-portnum 1178)
+(setq skk-server-report-response t);;変換時サーバーの文字を受けとるまでの accept-process-output 実行回数を表示
+;;isearchでskkを
+;(add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
+;(add-hook 'isearch-mode-hook 'skk-isearch-mode-cleanup)
+(setq skk-henkan-strict-okuri-precedence t);;送り仮名が厳密に正しい候補を優先して表示
+(setq skk-dcomp-activate t);;日本語をダイナミックに補完する
+(setq skk-use-look t);;英単語補完
+(setq skk-check-okurigana-on-touroku 'auto);;余分な送り仮名も辞書に自動登録、嫌なら 'nil 質問方式なら 'ask
+;;;sticky-shiftをskkでもつかう
+(setq skk-sticky-key ";")
+
+(require 'auto-install)
+(auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+(require 'redo+)
+(global-set-key (kbd "C-M-/") 'redo)
+(setq undo-no-redo t)
+(setq undo-limit 60000)
+(setq undo-strong-limit 600000)
+
+(require 'anything-startup)
+(define-key anything-map "\C-p" 'anything-previous-line)
+(define-key anything-map "\C-n" 'anything-next-line)
+(define-key anything-map (kbd "C-M-n") 'anything-next-source)
+(define-key anything-map (kbd "C-M-p") 'anything-previous-source)
+(define-key anything-map "\C-v" 'anything-next-page)
+(define-key anything-map "\M-v" 'anything-previous-page)
+(define-key anything-map "\C-z" 'anything-execute-persistent-action)
+(global-set-key (kbd "C-;") 'anything)
+
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
+(setq anything-samewindow nil)
+(push '("*anything*" :height 20) popwin:special-display-config)
+
+(require 'recentf-ext)
+(setq recentf-max-saved-items 500)
+(setq recentf-exclude '("/TAGS$" "/var/tmp/"))
+
+(require 'auto-async-byte-compile)
+(setq auto-async-byte-compile-exclude-file-regexp "/junk/")
+(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
+
+(require 'w3m-load)
+(setq w3m-home-page "http://www.google.co.jp/") ;起動時に開くページ
+(setq w3m-use-cookies t) ;クッキーを使う
+(setq w3m-bookmark-file "~/.w3m/bookmark.html") ;;ブックマークを保存するファイル
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;; programming;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ruby-mode
+(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
+(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.watchr$" . ruby-mode) auto-mode-alist))
+(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys)))
+
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+
+;(require 'ido)
+;(ido-mode t)
+
+(require 'rinari)
+
+(require 'rhtml-mode)
+(add-hook 'rhtml-mode-hook
+    (lambda () (rinari-launch)))
+
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
+(yas/load-directory "~/.emacs.d/yasnippets")
+(yas/load-directory "~/.emacs.d/yasnippets-rails/rails-snippets")
+
+(require 'ruby-block)
+(ruby-block-mode t)
+(setq ruby-block-highlight-toggle t)
+
+;;;;;;;;sass-mode;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
+
+;;;;;;;;Prolog-mode;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq auto-mode-alist (append '(("\\.pl$" . prolog-mode)
+                                ("\\.m$" . mercury-mode))
+                                auto-mode-alist))
+(setq prolog-system 'gnu)
+
+;;;;;;;;scala-mode;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'scala-mode-auto)
+(require 'scala-mode-feature-electric)
+    (add-hook 'scala-mode-hook
+	      (lambda ()
+		(scala-electric-mode)))
+
+;;;;;;;;Erlang-mode;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq auto-mode-alist (append '(("\\.erl$" . erlang-mode))
+                                auto-mode-alist))
+(setq erlang-electric-commands '())
+
+;;;;;;;;Coffee-mode;;;;;;;;;;;;;;;;;;;;;;;
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
+;;;add haml-mode to .hamljs
+(setq auto-mode-alist (append '(("\\.hamljs$" . haml-mode))
+                                auto-mode-alist))
+;;; ELPA packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+

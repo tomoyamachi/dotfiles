@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+#name : mysql_connect
+# --
+$link = mysql_connect('localhost','root','');
+if (!$link) {
+  die('Couldnt connect mysql : ' . mysql_error());
+}
+mysql_select_db('${1:table_name}', $link)
+$0

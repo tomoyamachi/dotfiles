@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+#name : try catch
+# --
+try {
+${1:condition};
+} catch (${2:Exception} $e) {
+  echo $e->getMessage(), PHP_EOL;
+  $0
+}

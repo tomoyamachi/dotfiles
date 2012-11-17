@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : multidimention array
+# --
+array(
+  '${1:firstKey}' => array(
+    ${2:multiFirstKey} => ${3:multiFirstValue},
+    ${4:multiSecondKey} => ${5:multiSecondValue},
+  ),
+  '${6:secondKey}' => array(
+    ${7:multiFirstKey} => ${8:multiFirstValue},
+    ${9:multiSecondKey} => $0,
+  ),
+);
