@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+#name : commment public function
+# --
+
+	// {{{ private function ${1:class}( )
+	/**Tomoya Amachi
+	 * @param  ${2:param}
+     * @todo   $3
+     * @readme $4
+	 */
+	private function $1 ($2)
+	{
+      $0
+	}
+	// }}}

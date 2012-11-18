@@ -1,0 +1,35 @@
+#/bin/bash
+# 引数 feature_id
+while getopts h: OPT
+do
+    case $OPT in
+        h)  echo "ミキサーウェブパーツのコピー。Usage : cpmixer mixer_id" 1>&2 ;;
+    esac
+done
+
+echo "ミキサーウェブパーツをコピーします. "
+WORKROOT="$(pwd)/web"
+cd $WORKROOT
+
+if [ "$1" ]; then
+
+    files=""
+    for f in *.gif;do
+        files="${files} ${f}"
+    done
+    scp $files amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/mixer/$1/
+    echo "$files をコピーしました"
+
+    files=""
+    for f in *.jpg;do
+        files="${files} ${f}"
+    done
+    scp $files amachi@bkrs2:/home/amachi/newtrunk/share/www/img/public/img/mixer/$1/
+    echo "$files をコピーしました"
+
+    ssh bkrs2 sh "~/shells/chmod.sh $1"
+    wait
+else
+    echo "mixer idを指定してください"
+    exit 1
+fi

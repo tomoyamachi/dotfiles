@@ -1,6 +1,21 @@
 # -*- mode: snippet -*-
 #name : function no parameter
 # --
+<<<<<<< HEAD
 function ${1:name}() {
   $0
 }
+=======
+
+	// {{{ ${1:type} function ${2:class}( )
+	/**Tomoya Amachi
+	 * @param  ${3:param}
+     * @todo   $4
+     * @readme $5
+	 */
+	$1 function $2 ($3)
+	{
+      $0
+	}
+	// }}}
+>>>>>>> 222c1f98d9df1edf7e606d172356d87250e78b4e

@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : snippet-text-bottom
+# --
+App::snippet('space')->setHeight(0)->setClass('text-top')->render();

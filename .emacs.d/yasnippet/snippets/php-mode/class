@@ -1,7 +1,31 @@
 # -*- mode: snippet -*-
 #name : class
 # --
+<<<<<<< HEAD
 class ${1:name}
 {
 $0
 }
+=======
+/**
+ *  ${1:new_class}クラス
+ *
+ * @category
+ * @package    $3
+ * @author     Tomoya Amachi
+ * @version    $Revision$
+ */
+
+$4{require_once '${5}';}
+
+class $1${2:extends ${3:package}} {
+
+	// {{{ const
+	//	}}}
+
+	// {{{ properties
+	// }}}
+
+    $0
+}
+>>>>>>> 222c1f98d9df1edf7e606d172356d87250e78b4e

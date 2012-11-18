@@ -1,0 +1,13 @@
+#!/bin/sh
+CMDNAME='basename $0'
+USAGE="USAGE : $CMDNAME [foldername] string"
+STRING=
+FOLDER=
+
+FILE=$1
+STRING=$2
+echo "$FILE"
+#sed  -i -e "s/->setClass('bgcolor-\(.*\)')//g" "$FILE"
+sed  -i -e "s/App::snippet(.'div-au-begin'.)->setColor(.'\(.*\)'.)/App::snippet('div-au-begin')->setColor('\1')->setClass('bgcolor-\1')/g" "$FILE"
+
+sed  -i -e "s/\$notice_link_list[].=.'<a class=\"fcolor-yellow\".href=\"' . $osl->link(\(.*\))\.\(.*\)<\/a>.*/\$notice_list_list[]['url'] = \1;\$notice_list\[\]['text'] = \2;/g" "$FILE"

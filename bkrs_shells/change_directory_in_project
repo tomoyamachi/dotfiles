@@ -1,0 +1,39 @@
+#!/bin/sh
+# c = change directory in current situation
+CMDNAME='basename $0'
+FILENAME="zend.log"
+
+
+controller_path='/share/www/bkrs2/application/modules/main/controllers/'
+view_path='/share/www/bkrs2/application/modules/main/views/'
+tool_path='/share/www/bkrs2-tool/application/modules/main/'
+image_path='/share/www/img/public/img/newui5/'
+model_path='/lib/php/Synphonie/Bkrs2/Master/'
+log_path='/logs/bkrs2/gree/'
+
+while getopts cvtiml: OPT
+do
+    case $OPT in
+        c) path=$controller_path;;
+        v) path=$view_path ;;
+        t) path=$tool_path ;;
+        i) path=$image_path ;;
+        m) path=$model_path ;;
+        l) path=$log_path ;;
+        \?) echo "Usage : $0 [ -c(ontroller) v(iew) t(ool) i(mage) l(og)] プロジェクトフォルダ名のヒント" 1>&2
+            exit 1 ;;
+    esac
+done
+
+shift `expr $OPTIND - 1`
+if [  "$1" ]then
+    for f in ${HOME}'/NetBeansProjects/'${1}*
+    do
+        project=$f
+        break
+    done
+else
+    project="$HOME/NetBeansProjects/newui"
+fi
+echo "$project$path 内のフォルダへ移動しました"
+cd $project$path

@@ -1,0 +1,31 @@
+#!/bin/sh
+CMDNAME='basename $0'
+LINENUM=100
+FOLDERPATH="${SY_LOG}zend/"
+FILENAME="zend.log"
+
+while getopts azmsn: OPT
+do
+    case $OPT in
+        a) FOLDERPATH="${SY_LOG}apache/" ;;
+        z)  ;;
+        m) FOLDERPATH="${SY_LOG}mq/" ;;
+        s) FOLDERPATH="${SY_LOG}sylog/" ;;
+        n) LINENUM=$OPTARG ;;
+        \?) echo "Usage : $0 [-asmz] [-n 表示行数] ファイル名のヒント" 1>&2
+            exit 1 ;;
+    esac
+done
+
+shift `expr $OPTIND - 1`
+if [ "$1" ]; then
+    for f in ${FOLDERPATH}${1}*
+    do
+        echo $f
+        tail -f -n ${LINENUM} $f
+        break
+    done
+else
+    tail -f -n ${LINENUM} ${FOLDERPATH}$FILENAME
+fi
+

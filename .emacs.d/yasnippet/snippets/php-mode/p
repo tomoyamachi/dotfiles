@@ -1,4 +1,10 @@
 # -*- mode: snippet -*-
+<<<<<<< HEAD
 #name : p
 # --
 <p>$0</p>
+=======
+#name : method
+# --
+<?php $0 ?>
+>>>>>>> 222c1f98d9df1edf7e606d172356d87250e78b4e

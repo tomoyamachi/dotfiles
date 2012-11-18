@@ -1,0 +1,3 @@
+#!/bin/sh
+# svn commit の diff を確認したあとでコミットするように
+CMDNAME='basename $0'

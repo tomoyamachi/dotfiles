@@ -1,0 +1,38 @@
+#/bin/bash
+# 引数 feature_id
+while getopts h: OPT
+do
+    case $OPT in
+        h)  echo "美食王特集、合成用画像のコピー。Usage : cpking 特集id" 1>&2 ;;
+    esac
+done
+
+echo "美食王画像をコピーします. "
+WORKROOT="$(pwd)/web"
+echo $WORKROOT
+
+if [ "$1" ]; then
+    ssh bkrs2 sh "~/shells/mkdir_king.sh $1"
+
+    cd "$WORKROOT/king"
+    files=""
+    for f in *.png;do
+        files="${files} ${f}"
+    done
+    scp $files amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/king/$1/
+    echo "$files をコピーしました"
+
+    cd "$WORKROOT/合成用PNG"
+    files=""
+    for f in *.png;do
+        files="${files} ${f}"
+    done
+    scp $files amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/king/$1/flash/
+    echo "$files をFlashフォルダにコピーしました"
+
+    ssh bkrs2 sh "~/shells/chmod.sh $1"
+    wait
+else
+    echo "特集idを指定してください"
+    exit 1
+fi

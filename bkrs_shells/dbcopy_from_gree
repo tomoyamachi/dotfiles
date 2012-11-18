@@ -1,0 +1,8 @@
+#!/bin/bash
+mv ~/gree_master_backup_latest.sql ~/sql_backup/gree_master_backup_`date +%Y%m%d-%H%M%S`.sql
+mysqldump -u root --add-drop-table gree_master > ~/gree_master_backup_latest.sql
+mysql -u root --default-character-set=utf8 mixi_master < ~/gree_master_backup_latest.sql
+mysql -u root --default-character-set=utf8 hang_master < ~/gree_master_backup_latest.sql
+mysql -u root --default-character-set=utf8 mbga_master < ~/gree_master_backup_latest.sql
+mysql -u root --default-character-set=utf8 entag_master < ~/gree_master_backup_latest.sql
+mysql -u root --default-character-set=utf8 ameba_master < ~/gree_master_backup_latest.sql
