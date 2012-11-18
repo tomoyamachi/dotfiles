@@ -112,6 +112,7 @@ setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動
 setopt brace_ccl # {a-c} を a b c に展開する機能を使えるようにする
 setopt auto_menu # 補完キー（Tab, Ctrl+I) を連打するだけで順に補完候補を自動で補完する
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin # sudoも補完の対象
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**' # 大文字小文字の区別をしない
 
 ## Alias configuration
 # expand aliases before completing
