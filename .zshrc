@@ -17,22 +17,64 @@ case "${OSTYPE}" in
         alias se="sudo emacsclient -n"
         ;;
 esac
+
+eval "$(rbenv init - zsh)"
+
 [[ $EMACS = t ]] && unsetopt zle
 export PATH=$HOME/shells:$HOME/dotfiles/shells:$PATH
 alias cddev='cd "/Volumes/プロジェクト/ぼくレス/特集/"'
 alias cdcd='cd "/Volumes/プロジェクト/ぼくレス外伝/特集/"'
 alias cdcampaign='cd "/Volumes/外部/横断プロモーション/"'
 
-alias bkrs="ssh amachi@bkrs2"
+alias h='cd ~'
+alias pa='ps auxwwww'
+alias pspgid='ps axwww -o "ppid pgid pid user fname args"'
+alias iops='ps auxwwww -L|awk "\$10 ~ /(D|STAT)/{print}"'
+alias u='cd ..'
+alias uu='cd ../..'
+alias uuu='cd ../../..'
+alias uuuu='cd ../../../..'
+alias ddu='du -sm ./*|sort -n|tail'
+# カレントフォルダ以下のファイル名を一覧表示
+iname() { find . -type d -name .svn -prune -o \( -iname "*$1*" -print \); }
+alias fnuniq='cut -d: -f1|uniq'
+
+
+# brew install ctags
+alias ctags='/usr/local/Cellar/ctags/5.8/bin/ctags'
+#cd コマンドでそれぞれの場所へ移動
+alias server="sudo /etc/init.d/httpd"
+alias cache="sudo /etc/init.d/memcached"
+alias cron="sudo /etc/init.d/crond"
+
+# エラーログやシステムログをtailで見る(デフォルト30行)
+alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
+alias aerror="tail -f -n 100 ${SY_LOG}apache/error.log"
+alias aaccess="tail -f -n 100 ${SY_LOG}apache/access.log"
+alias "sd"="svn diff -x -w"
+
+# $1以下のフォルダから $2が含まれる文字列を表示
+alias fg='. $HOME/dotfiles/shells/find_string_in_folder'
+alias sp='. $HOME/dotfiles/shells/change_project'
+alias c='. $HOME/dotfiles/shells/change_directory_in_project'
+
+alias spdev="ssh spdev"
 alias sbash="source $HOME/.zshrc"
 alias pe="ps -ax | grep Emacs"
+export SVN_SSH="ssh -l amachi -i /Users/amachitomoya/.ssh/id_rsa"
 #. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
+
+_Z_CMD=j
+. /Users/amachitomoya/dotfiles/z/z.sh
+precmd() {
+  _z --add "$(pwd -P)"
+}
 
 # tmux
 alias -g CA='| canything'
 # tmuxでの移動
-# alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
+alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
 function chpwd(){
   [ -n $TMUX ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD /bin/zsh
 }
@@ -50,10 +92,9 @@ function chpwd(){
 #     tmux set-option status-bg colour$(($(echo -n $(whoami)@$(hostname) | sum | cut -f1 -d' ') % 8 + 8)) | cat > /dev/null
 # fi
 
-alias fgrep='. $DOTFILE/shells/find_string_in_folder'
+alias fg='. $DOTFILE/shells/find_string_in_folder'
 
 alias where="command -v"
-alias j="jobs -l"
 case "${OSTYPE}" in
 freebsd*|darwin*)
     alias ls="ls -G -w"
