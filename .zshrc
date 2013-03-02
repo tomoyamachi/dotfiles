@@ -39,6 +39,40 @@ alias ddu='du -sm ./*|sort -n|tail'
 iname() { find . -type d -name .svn -prune -o \( -iname "*$1*" -print \); }
 alias fnuniq='cut -d: -f1|uniq'
 
+# 拡張子に応じて適切なアプリケーションでファイルを開く
+# http://d.hatena.ne.jp/itchyny/20130227/1361933011
+alias -s sh=sh
+alias -s rb=ruby
+alias -s php=php
+function extract() {
+  case $1 in
+    *.tar.gz|*.tgz) tar xzvf $1;;
+    *.tar.xz) tar Jxvf $1;;
+    *.zip) unzip $1;;
+    *.lzh) lha e $1;;
+    *.tar.bz2|*.tbz) tar xjvf $1;;
+    *.tar.Z) tar zxvf $1;;
+    *.gz) gzip -dc $1;;
+    *.bz2) bzip2 -dc $1;;
+    *.Z) uncompress $1;;
+    *.tar) tar xvf $1;;
+    *.arj) unarj $1;;
+  esac
+}
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+
+if [ `uname` = "Darwin" ]; then
+  alias eog='open -a Preview'
+  alias firefox='open -a Firefox '
+fi
+alias -s {png,jpg,bmp,PNG,JPG,BMP}=eog
+alias -s html=firefox
+
+# runapp() {
+# $app=`find /Applications/ -name “*.app” | grep $1`;
+# shift;
+# open -a “$app/” “$2″;
+# }
 
 # brew install ctags
 alias ctags='/usr/local/Cellar/ctags/5.8/bin/ctags'
@@ -54,7 +88,7 @@ alias aaccess="tail -f -n 100 ${SY_LOG}apache/access.log"
 alias "sd"="svn diff -x -w"
 
 # $1以下のフォルダから $2が含まれる文字列を表示
-alias fg='. $HOME/dotfiles/shells/find_string_in_folder'
+alias fgrep='. $HOME/dotfiles/shells/find_string_in_folder'
 alias sp='. $HOME/dotfiles/shells/change_project'
 alias c='. $HOME/dotfiles/shells/change_directory_in_project'
 
