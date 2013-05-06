@@ -28,10 +28,10 @@ echo "プロジェクトフォルダは $PROJ に移動しました"
 export VIEWS="$PROJ/share/www/bkrs2/application/modules/main/views/"
 export CONTR="$PROJ/share/www/bkrs2/application/modules/main/controllers/"
 export TOOL="$PROJ/share/www/bkrs2-tool/application/modules/main/"
-export IMAGE="$PROJ/share/www/img/public/img/newui5/"
+export IMAGE="$PROJ/share/www/img/public/img/"
 export SY="$PROJ/lib/php/Synphonie/Bkrs2/"
 export MODEL="$PROJ/lib/php/Synphonie/Bkrs2/Master/"
-export SY_LOG="$PROJ/logs/bkrs2/gree/"
+export SY_LOG="$PROJ/logs/bkrs2/dgame/"
 
 alias cdh="cd ${PROJ}"               # home
 alias cdv="cd ${VIEWS}" # view

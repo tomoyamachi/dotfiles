@@ -7,17 +7,13 @@ our $CONF_FILE_NAME = $ENV{'current_conf_file'};
 our $TEMP_FILE_NAME = $ENV{'temp_conf_file'};
 
 # ユーザーが増えたときはここに追加
-our %user_hash = (
-    "fukui" => "/fukui/bkrs2",
-    "amachi" => "/amachi/newtrunk",
-    "twatanabe" => "/twatanabe/newui",
-    "mochizuki" => "/mochizuki/bkrs2",
-    "furugaki" => "/furugaki/bkrs2",
-    "aim-kitazawa" => "/aim-kitazawa/bkrs2",
+our %folder_hash = (
+    "kingnew" => "/amachi/kingnew",
+    "newtrunk" => "/amachi/newtrunk",
     );
 
-our @user_names = keys %user_hash;
-our @paths = values %user_hash;
+our @user_names = keys %folder_hash;
+our @paths = values %folder_hash;
 our $replace_flag = 0;
 
 our $provider = shift @ARGV;  #対象のPFを取得
@@ -57,7 +53,7 @@ sub set_replace_flag {
 
 sub get_user_project_path {
     my $user = shift;
-    return $user_hash{$user}
+    return $folder_hash{$user}
 }
 
 sub line_replace {
