@@ -7,7 +7,7 @@ FILENAME="zend.log"
 controller_path='/share/www/bkrs2/application/modules/main/controllers/'
 view_path='/share/www/bkrs2/application/modules/main/views/'
 tool_path='/share/www/bkrs2-tool/application/modules/main/'
-image_path='/share/www/img/public/img/'
+image_path='/share/www/img/public/img/newui5/'
 model_path='/lib/php/Synphonie/Bkrs2/Master/'
 log_path='/logs/bkrs2/gree/'
 
@@ -20,20 +20,20 @@ do
         i) path=$image_path ;;
         m) path=$model_path ;;
         l) path=$log_path ;;
-        \?) echo "Usage : $0 [ -c(ontroller) v(iew) t(ool) i(mage) l(og)] プロジェクトフォルダ名のヒント" 1>&2
+        \?) echo "Usage : $0 [-c(ontroller) v(iew) t(ool) i(mage) l(og)] プロジェクトフォルダ名のヒント" 1>&2
             exit 1 ;;
     esac
 done
 
 shift `expr $OPTIND - 1`
-if [  "$1" ]then
-    for f in ${HOME}'/NetBeansProjects/'${1}*
+if [ "$1" ]; then
+    for f in ${HOME}'/'${1}*
     do
         project=$f
         break
     done
 else
-    project="$HOME/NetBeansProjects/newui"
+    project="$HOME/bkrs"
 fi
 echo "$project$path 内のフォルダへ移動しました"
 cd $project$path

@@ -2,7 +2,8 @@
 # sp - set project
 # プロジェクトフォルダを変更
 # それっぽいフォルダを選択し、移動を
-
+CMDNAME='basename $0'
+NBHOME="$HOME/"
 while getopts h: OPT
 do
     case $OPT in
@@ -14,13 +15,13 @@ done
 
 
 if [ "$1" ]; then
-    for f in ${HOME}'/'${1}*
+    for f in ${NBHOME}'/'${1}*
     do
         export PROJ=$f
         break
     done
 else
-    export PROJ="$HOME/newtrunk"
+    export PROJ="$NBHOME/newui"
 fi
 echo "プロジェクトフォルダは $PROJ に移動しました"
 
@@ -28,33 +29,26 @@ export VIEWS="$PROJ/share/www/bkrs2/application/modules/main/views/"
 export CONTR="$PROJ/share/www/bkrs2/application/modules/main/controllers/"
 export TOOL="$PROJ/share/www/bkrs2-tool/application/modules/main/"
 export IMAGE="$PROJ/share/www/img/public/img/"
+export IMAGE_SP="$PROJ/share/www/img/public/img-sp/"
 export SY="$PROJ/lib/php/Synphonie/Bkrs2/"
 export MODEL="$PROJ/lib/php/Synphonie/Bkrs2/Master/"
-export SY_LOG="$PROJ/logs/bkrs2/gree/"
+export SY_LOG="$PROJ/logs/bkrs2/"
 
 alias cdh="cd ${PROJ}"               # home
 alias cdv="cd ${VIEWS}" # view
 alias cds="cd ${VIEWS}scripts" # view
+alias cdss="cd ${VIEWS}scripts-sp" # view
 alias cdc="cd ${CONTR}"         # controller
 alias cdf="cd ${SY}"            # framework
 alias cdt="cd ${TOOL}"         # bkrs2-tool
 alias cdi="cd ${IMAGE}"         # bkrs2-tool
-alias cdr="cd $PROJ/share/www/bkrs2/resource/"         # resource
+alias cdis="cd ${IMAGE_SP}"         # bkrs2-tool
 alias cdr="cd $PROJ/share/www/bkrs2/resource/"         # resource
 
 # エラーログやシステムログをtailで見る(デフォルト30行)
-alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
-alias aerror="tail -f -n 100 ${SY_LOG}apache/error.log"
-alias aaccess="tail -f -n 100 ${SY_LOG}apache/$1.log"
-
-# cacheを消すための変数を設定
-# http://redmine.dev.synphonie.com/projects/bkrs2/wiki/%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E6%93%8D%E4%BD%9C
-export SY=$PROJ
-export PERL5LIB=$SY/framework/perl:$SY/lib/perl
-export SYNPHONIE_HOME=$SY
-export SERVICE_ID=bkrs2
-export PROVIDER_ID=gree
-export APPLICATION_ENV=devel
+alias debug="tail -f -n 100 ${SY_LOG}/zend/zend.log"
+alias aerror="tail -f -n 100 ${SY_LOG}/apache/error.log"
+alias aaccess="tail -f -n 100 ${SY_LOG}/apache/$1.log"
 
 #プロジェクトのルートフォルダへ移動
 cdh
