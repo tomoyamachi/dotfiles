@@ -54,6 +54,7 @@ FOLDER=$1
 STRING=$2
 #find "$FOLDER" \( -name ".svn" \) -prune -o -type f  -print | xargs -e grep $I "$STRING" /dev/null
 # find "$FOLDER" \( -name ".svn" \) -prune -o -type f -regex ".*[^svn|git|svn\-base]" -print | xargs -e grep $I "$STRING" /dev/null
-find "$FOLDER" \( -name ".svn" \) -prune -o -type f -regex ".*[^svn|git|svn\-base]" -print | xargs grep $I "$STRING" /dev/null
+#find "$FOLDER" \( -name ".svn" \) -prune -o -type f -regex ".*[^svn|git|svn\-base]" -print | xargs grep $I "$STRING" /dev/null
 
-#find . -type f -exec grep $I $L  --"$STRING" {} /dev/null \;
+find . \( -name ".svn" \) -prune -o -type f -exec grep $I $L "$STRING" {} /dev/null \;
+#    -type f -exec grep $I $L "$STRING" {} /dev/null \;

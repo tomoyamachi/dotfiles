@@ -11,7 +11,7 @@ fi
 if [[ $3 = 'production' ]];then
     user_array=( 'amachi' 'fukui' 'twatanabe' 'furugaki' 'mochizuki' )
 else
-    user_array=( 'kingnew' 'newtrunk' )
+    user_array=( 'kingnew' 'newtrunk' 'const' 'dgame' 'colopl' )
 fi
 
 user_name=

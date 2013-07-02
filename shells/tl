@@ -1,22 +1,25 @@
 #/bin/sh
 CMDNAME='basename $0'
 LINENUM=100
-FOLDERPATH="${SY_LOG}zend/"
+FOLDER_SUFFIX="zend/"
 FILENAME="zend.log"
 
-while getopts azn: OPT
+while getopts azn:p: OPT
 do
     case $OPT in
-        a) FOLDERPATH="${SY_LOG}apache/" ;;
+        a) FOLDER_SUFFIX="apache/" ;;
         z)  ;;
-        m) FOLDERPATH="${SY_LOG}mq/" ;;
-        s) FOLDERPATH="${SY_LOG}sylog/" ;;
+        m) FOLDER_SUFFIX="mq/" ;;
+        s) FOLDER_SUFFIX="sylog/" ;;
         n) LINENUM=$OPTARG ;;
+        p) PROVIDER_ID=$OPTARG ;;
         \?) echo "Usage : $0 [-asmz] [-n 表示行数] ファイル名のヒント" 1>&2
             exit 1 ;;
     esac
 done
 
+FOLDERPATH=${SY_LOG}${PROVIDER_ID}/$FOLDER_SUFFIX
+echo $PROVIDER_ID
 shift `expr $OPTIND - 1`
 if [ "$1" ]; then
     for f in ${FOLDERPATH}${1}*

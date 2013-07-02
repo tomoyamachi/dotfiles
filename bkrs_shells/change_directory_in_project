@@ -7,7 +7,7 @@ FILENAME="zend.log"
 controller_path='/share/www/bkrs2/application/modules/main/controllers/'
 view_path='/share/www/bkrs2/application/modules/main/views/'
 tool_path='/share/www/bkrs2-tool/application/modules/main/'
-image_path='/share/www/img/public/img/newui5/'
+image_path='/share/www/img/public/img/'
 model_path='/lib/php/Synphonie/Bkrs2/Master/'
 log_path='/logs/bkrs2/gree/'
 

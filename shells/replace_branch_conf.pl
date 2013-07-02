@@ -8,8 +8,9 @@ our $TEMP_FILE_NAME = $ENV{'temp_conf_file'};
 
 # ユーザーが増えたときはここに追加
 our %folder_hash = (
-    "kingnew" => "/amachi/kingnew",
     "newtrunk" => "/amachi/newtrunk",
+    "dgame" => "/amachi/dgame",
+    "colopl" => "/amachi/colopl",
     );
 
 our @user_names = keys %folder_hash;

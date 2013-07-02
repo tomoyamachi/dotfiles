@@ -9,12 +9,12 @@ fi
 
 ### 指定されたユーザー名が指定されたものにあるかチェック
 if [[ $3 = 'production' ]];then
-    user_array=( 'amachi' 'fukui' 'twatanabe' 'furugaki' )
+    user_array=( 'amachi' 'fukui' 'twatanabe' 'furugaki' 'mochizuki' )
 else
-    user_array=( 'kingnew' 'newtrunk' )
+    user_array=( 'kingnew' 'newtrunk' 'const' 'dgame' )
 fi
 
-user_name=
+user_name=l
 for valid_name in  ${user_array[@]};do
     if [[ $2 = $valid_name ]];then
         user_name=$valid_name
@@ -49,4 +49,3 @@ fi
 /etc/init.d/httpd configtest
 
 mv $temp_conf_file $current_conf_file
-s
