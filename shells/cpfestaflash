@@ -7,45 +7,34 @@ if [ $# -ne 2 ]; then
 else
     festa_id=$1
     pf_count=$2
-    WORKROOT="$(pwd)/データ"$pf_count"アプリ"
+    WORKROOT="$(pwd)"
     echo $WORKROOT
     cd "$WORKROOT"
     ssh bkrs2 sh "~/shells/mkdir_festa.sh $festa_id"
 
+    campaign_file_name="campaign_op0`expr $pf_count - 1`"
     find . -type f -name "*\.swf" | while read f;do
-        check_swf $f
         if [ `echo $f | grep all_clear` ] ; then
             file_name='festa_comp'
         elif [ `echo $f | grep clear` ] ; then
             file_name='festa_quest_clear'
         elif [ `echo $f | grep present` ] ; then
             file_name='festa_present'
-        elif [ `echo $f | grep campaign_op` ] ; then
+        elif [ `echo $f | grep $campaign_file_name` ] ; then
             file_name='festa_start'
         fi
-        scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/flash/festa/"$festa_id"/"$pf_count"/"$file_name".swf"
+
+        if [ `echo $f | grep $campaign_file_name` ] ; then
+            check_swf $f
+            scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/flash/festa/"$festa_id"/"$pf_count"/"$file_name".swf"
+        elif [ `echo $f | grep campaign_op` ] ; then
+            :
+        else
+            :
+#            check_swf $f
+#            scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/resource/flash/festa/"$festa_id"/"$file_name".swf"
+        fi
     done
-
-# <style>html, body {width: 100%; height: 100%;  background-color:#f0f0f0;}</style>
-# </head>
-# <body style="margin: 0; overflow: hidden;">
-# <div id="stage" onClick="jump()">
-# <div id="swiffycontainer" style="width: 100%; height: 320px;"></div>
-# </div>
-# <script>
-# var stage = new swiffy.Stage(document.getElementById('swiffycontainer'), swiffyobject);
-# stage.start();
-# <?php
-# foreach ($this->params as $key => $value ) {
-#     echo sprintf('stage.setFlashVars("%s=%s");',$key,$value),PHP_EOL;
-# }
-# ?>
-# stage.setFlashVars("next_uri=<?= $this->next_url?>");
-# </script>
-# </body>
-# </html>
-
-
 
      find . -type f -name "*\.html" | while read f;do
         sed -i -e '/<style>/,/<\/html>/d' $f
@@ -120,26 +109,18 @@ function jump(){
 </html>
 EOT`
 
-        elif [ `echo $f | grep campaign_op` ] ; then
+        elif [ `echo $f | grep $campaign_file_name` ] ; then
             file_name='festa-start'
             replace_str=`cat <<'EOT'
 <style>html, body {width: 100%; height: 100%; background-color:#f0f0f0;}</style>
 </head>
 <body style="margin: 0; overflow: hidden;">
-<div id="stage" onClick="jump()">
 <div id="swiffycontainer" style="width: 100%; height: 320px;"></div>
-</div>
 <script>
 var stage = new swiffy.Stage(document.getElementById('swiffycontainer'), swiffyobject);
 stage.start();
 stage.setFlashVars("appli=<?= $this->params['appli'] ?>");
-var cnt = 0;
-function jump(){
-    cnt++;
-    if (cnt == 4){
-        location.replace('<?= $this->next_url ?>');
-    }
-}
+stage.setFlashVars("next_uri=<?= $this->next_url?>");
 </script>
 </body>
 </html>
@@ -152,7 +133,16 @@ EOT`
         do
             echo $line >> $f
         done
-        scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/application/modules/main/views/scripts/gimmick/html/festa/"$festa_id"/"$pf_count"/"$file_name".phtml"
+
+        if [ `echo $f | grep $campaign_file_name` ] ; then
+            scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/application/modules/main/views/scripts/gimmick/html/festa/"$festa_id"/"$pf_count"/"$file_name".phtml"
+        elif [ `echo $f | grep campaign_op` ] ; then
+            :
+        else
+            :
+#            scp -iv $f "amachi@bkrs2:/home/amachi/newtrunk/share/www/bkrs2/application/modules/main/views/scripts/gimmick/html/festa/"$festa_id"/"$file_name".phtml"
+        fi
+
      done
 
     ssh bkrs2 sh "~/shells/chmod.sh festa"

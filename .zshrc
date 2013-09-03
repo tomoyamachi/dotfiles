@@ -15,16 +15,22 @@ case "${OSTYPE}" in
         ;;
 esac
 [[ $EMACS = t ]] && unsetopt zle
-export PATH=$HOME/shells:$HOME/dotfiles/shells:$PATH
+export PATH=$HOME/dotfiles/bkrs_shells:$HOME/dotfiles/shells:$PATH:$HOME/bkcd_shells
 alias cddev='cd "/Volumes/プロジェクト/ぼくレス/特集/"'
 alias cdcd='cd "/Volumes/プロジェクト/ぼくレス外伝/特集/"'
 alias cdcampaign='cd "/Volumes/外部/横断プロモーション/"'
 
 alias bkrs="ssh amachi@bkrs2"
 alias sbash="source $HOME/.zshrc"
-alias pe="ps -ax | grep Emacs"
+alias ke="ps -ax | grep 'Emac[s]' | awk '{print $1}' | xargs kill -9"
+alias logserver="ssh tools02.bkrs2"
+alias tools="ssh tools01.bkrs2"
 #. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
+# $1以下のフォルダから $2が含まれる文字列を表示
+alias fgrep='. find_string_in_folder'
+alias sp='. change_project'
+alias c='. change_directory_in_project'
 
 # tmux
 alias -g CA='| canything'
@@ -33,6 +39,11 @@ alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
 function chpwd(){
   [ -n $TMUX ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD /bin/zsh
 }
+
+#rbenv
+path=($HOME/.rbenv/bin(N) $path)
+eval "$(rbenv init -)"
+rbenv global 1.9.2-p290
 
 # #tmuxでsshが破棄されてもWindowをとじない
 # function ssh_tmux() {
@@ -46,7 +57,7 @@ function chpwd(){
 # if [ "$TMUX" != "" ]; then
 #     tmux set-option status-bg colour$(($(echo -n $(whoami)@$(hostname) | sum | cut -f1 -d' ') % 8 + 8)) | cat > /dev/null
 # fi
-
+DOTFILE=~/dotfiles
 alias fgrep='. $DOTFILE/shells/find_string_in_folder'
 
 alias where="command -v"

@@ -888,3 +888,10 @@
 (defun ktai-hankaku-katakana-buffer ()
   (interactive)
   (ktai-hankaku-katakana-region (point-min) (point-max)))
+
+
+(defun scp-bkrs2-after-save-hook ()
+  (shell-command
+   (format
+    "scp %s dev_bkrs:/home/amachi/"
+    (buffer-file-name (current-buffer)))))

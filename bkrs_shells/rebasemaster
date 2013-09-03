@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$1" ]; then
+    git checkout master
+    git fetch upstream
+    git rebase upstream/master
+    if [ $? -ne 0 ]; then
+        echo "upstream/masterのrebaseに失敗しました"
+        exit 1
+    fi
+
+    git checkout $1
+    git add .
+    git commit -m "rebase"
+    git rebase master
+else
+    echo "戻り元のbranch名を指定してください"
+    exit 1
+fi
