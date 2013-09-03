@@ -18,6 +18,11 @@ do
 done
 
 shift `expr $OPTIND - 1`
+
+if [ $HOSTNAME = 'tools02.bkrs2' ]; then
+    FOLDERPATH="/home/sy/var/fluentd/logs/bkrs2/gree/links/"
+fi
+
 if [ "$1" ]; then
     for f in ${FOLDERPATH}${1}*
     do

@@ -30,18 +30,20 @@ export VIEWS="$PROJ/share/www/bkrs2/application/modules/main/views/"
 export CONTR="$PROJ/share/www/bkrs2/application/modules/main/controllers/"
 export TOOL="$PROJ/share/www/bkrs2-tool/application/modules/main/"
 export IMAGE="$PROJ/share/www/img/public/img/"
+export IMAGE_SP="$PROJ/share/www/img/public/img-sp/"
 export SY="$PROJ/lib/php/Synphonie/Bkrs2/"
 export MODEL="$PROJ/lib/php/Synphonie/Bkrs2/Master/"
-export SY_LOG="$PROJ/logs/bkrs2/gree/"
+export SY_LOG="$PROJ/logs/bkrs2/"
 
 alias cdh="cd ${PROJ}"               # home
 alias cdv="cd ${VIEWS}" # view
 alias cds="cd ${VIEWS}scripts" # view
+alias cdss="cd ${VIEWS}scripts-sp" # view
 alias cdc="cd ${CONTR}"         # controller
 alias cdf="cd ${SY}"            # framework
 alias cdt="cd ${TOOL}"         # bkrs2-tool
 alias cdi="cd ${IMAGE}"         # bkrs2-tool
-alias cdr="cd $PROJ/share/www/bkrs2/resource/"         # resource
+alias cdis="cd ${IMAGE_SP}"         # bkrs2-tool
 alias cdr="cd $PROJ/share/www/bkrs2/resource/"         # resource
 
 # エラーログやシステムログをtailで見る(デフォルト30行)

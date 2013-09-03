@@ -1,10 +1,10 @@
-#/bin/sh
+#!/bin/sh
 CMDNAME='basename $0'
 LINENUM=100
 FOLDERPATH="${SY_LOG}zend/"
 FILENAME="zend.log"
 
-while getopts azn: OPT
+while getopts azmsn: OPT
 do
     case $OPT in
         a) FOLDERPATH="${SY_LOG}apache/" ;;
@@ -18,6 +18,11 @@ do
 done
 
 shift `expr $OPTIND - 1`
+
+if [ $HOSTNAME = 'tools02.bkrs2' ]; then
+    FOLDERPATH="/home/sy/var/fluentd/logs/bkrs2/gree/links/"
+fi
+
 if [ "$1" ]; then
     for f in ${FOLDERPATH}${1}*
     do

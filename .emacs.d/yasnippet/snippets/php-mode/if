@@ -1,6 +1,10 @@
 # -*- mode: snippet -*-
 #name : if
 # --
+<<<<<<< HEAD
+if (${1:condition}) {
+=======
 if (${1:condition}){
+>>>>>>> 222c1f98d9df1edf7e606d172356d87250e78b4e
   $0
 }

@@ -4,6 +4,7 @@
 # それっぽいフォルダを選択し、移動を
 CMDNAME='basename $0'
 NBHOME="$HOME/programs/"
+
 while getopts h: OPT
 do
     case $OPT in
@@ -50,9 +51,9 @@ alias cdb="cd ${BATCH}"
 alias cdstats="cd ${STATS}"
 
 # エラーログやシステムログをtailで見る(デフォルト30行)
-alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
-alias aerror="tail -f -n 100 ${SY_LOG}apache/error.log"
-alias aaccess="tail -f -n 100 ${SY_LOG}apache/$1.log"
+alias debug="tail -f -n 100 ${SY_LOG}/zend/zend.log"
+alias aerror="tail -f -n 100 ${SY_LOG}/apache/error.log"
+alias aaccess="tail -f -n 100 ${SY_LOG}/apache/$1.log"
 
 #プロジェクトのルートフォルダへ移動
 cdh

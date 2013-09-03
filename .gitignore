@@ -1,3 +1,4 @@
+.emacs.d/auto-save-list
 *.swp
 \#*\#
 auto-save-list

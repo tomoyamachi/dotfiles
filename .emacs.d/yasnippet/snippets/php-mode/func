@@ -1,6 +1,11 @@
 # -*- mode: snippet -*-
 #name : function no parameter
 # --
+<<<<<<< HEAD
+function ${1:name}() {
+  $0
+}
+=======
 
 	// {{{ ${1:type} function ${2:class}( )
 	/**Tomoya Amachi
@@ -13,3 +18,4 @@
       $0
 	}
 	// }}}
+>>>>>>> 222c1f98d9df1edf7e606d172356d87250e78b4e

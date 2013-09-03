@@ -27,13 +27,13 @@ done
 
 shift `expr $OPTIND - 1`
 if [ "$1" ]; then
-    for f in ${HOME}'/NetBeansProjects/'${1}*
+    for f in ${HOME}'/'${1}*
     do
         project=$f
         break
     done
 else
-    project="$HOME/NetBeansProjects/newui"
+    project="$HOME/bkrs"
 fi
 echo "$project$path 内のフォルダへ移動しました"
 cd $project$path

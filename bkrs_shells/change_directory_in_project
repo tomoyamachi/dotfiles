@@ -20,20 +20,20 @@ do
         i) path=$image_path ;;
         m) path=$model_path ;;
         l) path=$log_path ;;
-        \?) echo "Usage : $0 [ -c(ontroller) v(iew) t(ool) i(mage) l(og)] プロジェクトフォルダ名のヒント" 1>&2
+        \?) echo "Usage : $0 [-c(ontroller) v(iew) t(ool) i(mage) l(og)] プロジェクトフォルダ名のヒント" 1>&2
             exit 1 ;;
     esac
 done
 
 shift `expr $OPTIND - 1`
-if [  "$1" ]then
-    for f in ${HOME}'/NetBeansProjects/'${1}*
+if [ "$1" ]; then
+    for f in ${HOME}'/'${1}*
     do
         project=$f
         break
     done
 else
-    project="$HOME/NetBeansProjects/newui"
+    project="$HOME/bkrs"
 fi
 echo "$project$path 内のフォルダへ移動しました"
 cd $project$path
