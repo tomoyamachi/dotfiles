@@ -254,7 +254,7 @@
 (desktop-load-default)
 ;; C-x bでミニバッファにバッファ候補を表示
 (iswitchb-mode t)
-(iswitchb-default-keybindings)
+;(iswitchb-default-keybindings)
 ;; terminalでファイルを開くときにemacsで開けるようにする
 ;; .bashrcに「alias e='emacsclient -n'」と書く
 (if window-system (server-start))
@@ -507,7 +507,7 @@
 
 ;; ;; comma
 ;; (setq skk-rom-kana-rule-list
-;; (cons '("," nil skk-comma)
+;; (cons '("," Nil skk-comma)
 ;; skk-rom-kana-rule-list))
 ;; (defun skk-comma (arg)
 ;;   (let ((c (char-before (point))))
