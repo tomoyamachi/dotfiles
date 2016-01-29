@@ -1,3 +1,49 @@
+#
+# .gitconfig
+#
+
+[core]
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    # Unicode
+    precomposeunicode = true
+    quotepath = true
+# [include]
+#    path = ~/.gitconfig_local
+[push]
+    # simple,matching,upstream,current
+    default = simple
+[color]
+    ui = auto
+    status = auto
+    diff = auto
+    branch = auto
+    interactive = auto
+    grep = auto
+[diff]
+    patience = true
+[help]
+    autocorrect = 0
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    ce = commit -v --amend
+    st = status --branch --short
+    si = status --ignored --short
+    branches = branch -a
+    remotes = remote -v
+    tags = tag -l
+    lg = log --graph --all --decorate --abbrev-commit --branches --date=short --pretty=format:\"%C(red)%h%C(reset) %C(green)[%ad]%C(reset) %s %C(cyan)@%an%C(reset) %C(yellow)%d%C(reset)\"
+    ls = log --stat
+    lp = log -p
+    la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
+    lr = log origin
+    ranking = shortlog -s -n --no-merges
+    dh = diff --histogram
+    dw = diff --word-diff
+    dc = diff --cached
+    wc = whatchanged
 [tig "bind"]
   generic = g move-first-line
   generic = G move-last-line

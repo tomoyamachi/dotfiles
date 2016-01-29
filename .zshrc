@@ -18,10 +18,19 @@ case "${OSTYPE}" in
         ;;
 esac
 
-eval "$(rbenv init - zsh)"
+alias hg='history 100 | grep '
+alias ql="qlmanage -p 2>/dev/null"
+alias reload="source $HOME/.zshrc"
+alias mute='/usr/bin/osascript -e "set volume 0"'
+alias cdcopy='pwd|pbcopy'
+alias imgdim='sips -g pixelHeight -g pixelWidth $1'
+alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done'
+
+# eval "$(rbenv init - zsh)"
 
 # bkrs2サーバ設定
-if [ $HOSTNAME = 'bkrs2' ]; then
+if [ "$HOSTNAME" = 'bkrs2' ]; then
   # screenでログインした場合、ssh-agent未起動なら起動する
   if [ $TERM = 'screen' ]; then
     if [ -e ~/.ssh/environment ]; then
@@ -32,26 +41,17 @@ if [ $HOSTNAME = 'bkrs2' ]; then
       # 設定ファイルを作成して読み込む
       ssh-agent > ~/.ssh/environment
      . ~/.ssh/environment
-
     fi
   fi
 fi
 
-# tools02.bkrs2サーバ設定
-if [ $HOSTNAME = 'tools02.bkrs2' ]; then
-  alias logs=". ~/sh/to_log_dir.sh"
-fi
-
 # systgサーバ設定
-if [ $HOSTNAME = 'systg' ]; then
+if [ "$HOSTNAME" = 'systg' ]; then
     . ~/.sshagent
 fi
 
 [[ $EMACS = t ]] && unsetopt zle
 export PATH=$HOME/dotfiles/bkrs_shells:$HOME/dotfiles/shells:$PATH:$HOME/bkcd_shells
-alias cddev='cd "/Volumes/プロジェクト/ぼくレス/特集/"'
-alias cdcd='cd "/Volumes/プロジェクト/ぼくレス外伝/特集/"'
-alias cdcampaign='cd "/Volumes/外部/横断プロモーション/"'
 
 alias h='cd ~'
 alias pa='ps auxwwww'
@@ -118,13 +118,9 @@ alias "sd"="svn diff -x -w"
 alias fgrep='. $HOME/dotfiles/shells/find_string_in_folder'
 alias sp='. $HOME/dotfiles/shells/change_project'
 alias c='. $HOME/dotfiles/shells/change_directory_in_project'
-sp newtrunk
-alias spdev="ssh spdev"
-alias sbash="source $HOME/.zshrc"
 alias pe="ps -ax | grep Emacs"
 alias ke="ps -ax | grep 'Emac[s]' | awk '{print $1}' | xargs kill -9"
-alias logserver="ssh tools02.bkrs2"
-alias tools="ssh tools01.bkrs2"
+
 #export SVN_SSH="ssh -l amachi -i /Users/amachitomoya/.ssh/id_rsa"
 #. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
@@ -148,9 +144,9 @@ alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
 #}
 
 #rbenv
-path=($HOME/.rbenv/bin(N) $path)
-eval "$(rbenv init -)"
-rbenv global 1.9.2-p290
+# path=($HOME/.rbenv/bin(N) $path)
+# eval "$(rbenv init -)"
+# rbenv global 1.9.2-p290
 
 # #tmuxでsshが破棄されてもWindowをとじない
 # function ssh_tmux() {
@@ -235,7 +231,6 @@ setopt complete_aliases     # aliased ls needs if file/dir completions work
 setopt noautoremoveslash # no remove postfix slash of command line
 setopt nolistbeep # no beep sound when complete list displayed
 setopt auto_param_keys # カッコの対応などを自動的に補完する
-
 
 
 ########### キーバインド設定 ################

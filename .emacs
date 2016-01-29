@@ -70,27 +70,27 @@
 (global-set-key "\C-x\C-r" 'revert-buffer-no-confirm);; バッファ一覧の情報をさらに表示
 
 ;;;   shell 設定 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'multi-term)
-(setq multi-term-program shell-file-name)
-(setq multi-term-program "/bin/zsh")
-(add-to-list 'term-unbind-key-list '"C-o")
-(custom-set-variables
-   '(term-default-bg-color "#000000")        ;; background color (black)
-   '(term-default-fg-color "#dddd00"))       ;; foreground color (yellow)
-(global-set-key (kbd "C-t") '(lambda ()
-                                (interactive)
-                                (multi-term)))
-(global-set-key (kbd "C-}") 'multi-term-next)
-(global-set-key (kbd "C-{") 'multi-term-prev)
-(require 'shell-pop)
-;; multi-term に対応
-(add-to-list 'shell-pop-internal-mode-list '("multi-term" "*terminal<1>*" '(lambda () (multi-term))))
-(shell-pop-set-internal-mode "multi-term")
-;; 25% の高さに分割する
-(shell-pop-set-window-height 25)
-(shell-pop-set-internal-mode-shell shell-file-name)
-;; ショートカットも好みで変更してください
-(global-set-key (kbd "C-c t") 'shell-pop)
+;; (require 'multi-term)
+;; (setq multi-term-program shell-file-name)
+;; (setq multi-term-program "/bin/zsh")
+;; (add-to-list 'term-unbind-key-list '"C-o")
+;; (custom-set-variables
+;;    '(term-default-bg-color "#000000")        ;; background color (black)
+;;    '(term-default-fg-color "#dddd00"))       ;; foreground color (yellow)
+;; (global-set-key (kbd "C-t") '(lambda ()
+;;                                 (interactive)
+;;                                 (multi-term)))
+;; (global-set-key (kbd "C-}") 'multi-term-next)
+;; (global-set-key (kbd "C-{") 'multi-term-prev)
+;; (require 'shell-pop)
+;; ;; multi-term に対応
+;; (add-to-list 'shell-pop-internal-mode-list '("multi-term" "*terminal<1>*" '(lambda () (multi-term))))
+;; (shell-pop-set-internal-mode "multi-term")
+;; ;; 25% の高さに分割する
+;; (shell-pop-set-window-height 25)
+;; (shell-pop-set-internal-mode-shell shell-file-name)
+;; ;; ショートカットも好みで変更してください
+;; (global-set-key (kbd "C-c t") 'shell-pop)
 
 ;;;;;;;;;;;;;;;;;;;anything ;;;;;;;;;;;;;;;;;;;;;
 (require 'anything-startup)
@@ -110,9 +110,9 @@
 
 
 ;; subversion
-(require 'vc-svn)
-(autoload 'svn-status "dsvn" "Run `svn status'." t)
-(autoload 'svn-update "dsvn" "Run `svn update'." t)
+;; (require 'vc-svn)
+;; (autoload 'svn-status "dsvn" "Run `svn status'." t)
+;; (autoload 'svn-update "dsvn" "Run `svn update'." t)
 
 
 ;;http://cx4a.blogspot.com/2011/12/popwineldirexel.html
@@ -520,10 +520,10 @@
 ;; (setq skk-sticky-key ";")
 
 
-(require 'auto-install)
-(auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;; (require 'auto-install)
+;; (auto-install-update-emacswiki-package-name t)
+;; (auto-install-compatibility-setup)
+;; (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (require 'redo+)
 (global-set-key (kbd "C-M-/") 'redo)
@@ -889,9 +889,20 @@
   (interactive)
   (ktai-hankaku-katakana-region (point-min) (point-max)))
 
+(require 'vc)
 
-(defun scp-bkrs2-after-save-hook ()
-  (shell-command
-   (format
-    "scp %s dev_bkrs:/home/amachi/"
-    (buffer-file-name (current-buffer)))))
+(defun vc-root-dir ()
+  (let ((backend (vc-deduce-backend)))
+    (and backend
+         (ignore-errors
+           (vc-call-backend backend 'root default-directory)))))
+
+(require 'auto-rsync)
+(auto-rsync-mode t)
+
+(setq auto-rsync-dir-alist
+       '(
+        ("/Users/amachi/programs/php-common" . "mer:/home/amachi/php-common")
+        ("/Users/amachi/programs/relocal_new" . "mer:/home/amachi/relocal_new")
+        ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
+        ))
