@@ -26,6 +26,9 @@ alias cdcopy='pwd|pbcopy'
 alias imgdim='sips -g pixelHeight -g pixelWidth $1'
 alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done'
+alias server='sudo service nginx'
+# alias server='sudo service apache
+export ncnf="/etc/nginx/conf.d"
 
 # eval "$(rbenv init - zsh)"
 

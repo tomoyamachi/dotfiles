@@ -693,21 +693,24 @@
 (add-hook 'php-mode-hook
           '(lambda ()
              (hs-minor-mode)
+             (flymake-mode t)
              (setq tab-width 4)
              (setq c-basic-offset 4)
+             (setq indent-tabs-mode nil)
              (setq c-hanging-comment-ender-p nil)
              (setq indent-tabs-mode nil))
           )
 
-(add-hook 'c-mode-common-hook
-    (setq c-basic-offset tab-width))
+
+;; (add-hook 'c-mode-common-hook
+;;     (setq c-basic-offset tab-width))
 
 (setq standard-indent 4)
 (setq php-indent-level 4)
-(setq ruby-indent-level 4)
-;; 補完のためのマニュアルのパス
+;; ;; (setq ruby-indent-level 4)
+;; ;; 補完のためのマニュアルのパス
 (setq php-completion-file "~/.emacs.d/php.dict")
-;; M-TAB が有効にならないので以下の設定を追加
+;; ;; M-TAB が有効にならないので以下の設定を追加
 (define-key php-mode-map "\C-\M-i" 'php-complete-function)
 (define-key php-mode-map (kbd "C-c C-o") 'hs-toggle-hiding)
 (define-key php-mode-map (kbd "C-c C-f") 'hs-toggle)
@@ -732,28 +735,8 @@
 ;; ;; decoration-level: 1 のときに使用されるface
 ;; (set-face-background 'mmm-default-submode-face "gray15")
 
-
 ;;;;;;;;sass-mode;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (when (require 'flymake nil t)
-;;   (global-set-key "\C-cd" 'flymake-display-err-menu-for-current-line)
-;;   ;; PHP
-;;   (when (not (fboundp 'flymake-php-init))
-;;     (defun flymake-php-init ()
-;;       (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                          'flymake-create-temp-inplace))
-;;              (local-file (file-relative-name
-;;                           temp-file
-;;                           (file-name-directory buffer-file-name))))
-;;         (list "php" (list "-f" local-file "-l"))))
-;;     (setq flymake-allowed-file-name-masks
-;;           (append
-;;            flymake-allowed-file-name-masks
-;;            '(("\.php[345]?$" flymake-php-init))))
-;;     (setq flymake-err-line-patterns
-;;           (cons
-;;            '("\(\(?:Parse error\|Fatal error\|Warning\): .*\) in \(.*\) on line \([0-9]+\)" 2 3 nil 1)
-;;            flymake-err-line-patterns)))
-;; )
+
 ;; (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
 
 ;; ;; flymake for ruby と rvmを併用
@@ -899,10 +882,16 @@
 
 (require 'auto-rsync)
 (auto-rsync-mode t)
-
 (setq auto-rsync-dir-alist
        '(
         ("/Users/amachi/programs/php-common" . "mer:/home/amachi/php-common")
-        ("/Users/amachi/programs/relocal_new" . "mer:/home/amachi/relocal_new")
+        ("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
         ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
         ))
+
+;; (require 'flycheck)
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; (require 'yaml-mode)
+;; (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+;; (define-key yaml-mode-map "\C-m" 'newline-and-indent)
