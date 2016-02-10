@@ -1,12 +1,9 @@
 /**
  *  ${1:new_class}クラス
  *
- * @namespace $6
- * @readme    $3
- * @author     Tomoya Amachi
+ * $4
+ * Tomoya AMACHI
  */
-
-$4{require_once '${5}';}
 
 class $1 ${2:extends ${3:package}} {
 

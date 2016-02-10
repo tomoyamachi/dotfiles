@@ -1,11 +1,11 @@
-	// {{{ ${1:type} function ${2:class}( )
-	/**
-	 * @param $0 ${3:param}
+// {{{ ${1:type} function ${2:class}()
+    /**
+     * $5
+     * @param $0 ${3:param}
      * @return $4
-     * @readme $5
-	 */
-	$1 function $2 ($3)
-	{
+     */
+    $1 function $2($3)
+    {
 
-	}
-	// }}}
+    }
+    // }}}
