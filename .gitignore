@@ -5,3 +5,5 @@ auto-save-list
 .\#*
 *_flymeke.php
 .zsh_history
+.DS_Store
+.emacs.d/recentf

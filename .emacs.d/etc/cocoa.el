@@ -3,6 +3,7 @@
 (setq ns-command-modifier (quote meta))
 (define-key global-map [ns-drag-file] 'ns-find-file)
 (setq ns-pop-up-frames nil)
+(tool-bar-mode 0);;; ツールバーを出さない
 
 (set-language-environment 'Japanese)
 (prefer-coding-system 'utf-8-unix)

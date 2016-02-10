@@ -36,7 +36,6 @@
 (global-set-key "\C-m" 'newline-and-indent);; 改行時にインデント
 
 (setq text-mode-hook 'turn-off-auto-fill)
-(tool-bar-mode 0);;; ツールバーを出さない
 (transient-mark-mode 1);リージョンを見易く
 (delete-selection-mode 1);regionをBS,DELキーで一括削除
 (setq inhibit-startup-message t);; 起動時のメッセージを非表示
@@ -61,6 +60,16 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 ;;bookmarkを変更したら、即保存
 (setq bookmark-save-flag 1)
+
+;;; package-installにmelpaなど主要なレポジトリを追加
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/pac\
+kages/") t)
+(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/pac\
+kages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
 
 ;;;http://www.emacswiki.org/emacs/RevertBuffer
 (global-auto-revert-mode 1);;;自動でrevert-buffer
@@ -101,7 +110,7 @@
 (define-key anything-map "\C-v" 'anything-next-page)
 (define-key anything-map "\M-v" 'anything-previous-page)
 (define-key anything-map "\C-z" 'anything-execute-persistent-action)
-(global-set-key (kbd "C-;") 'anything)
+(global-set-key (kbd "C-l") 'anything)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
@@ -124,7 +133,7 @@
 ;; ひとまずpopwinをoffに。
 (push '(direx:direx-mode :position left :width 25 :dedicated t)
      popwin:special-display-config)
-(global-set-key (kbd "C-:") 'direx:jump-to-directory-other-window)
+(global-set-key (kbd "C-;") 'direx:jump-to-directory-other-window)
 
 ;;; 関数名をバッファの部分に表示する
 (which-func-mode 1)
@@ -283,10 +292,10 @@
 (defface hlline-face
   '((((class color)
       (background dark))
-     (:background "DimGrey"))
+     (:background "DarkRed"))
     (((class color)
       (background light))
-     (:background "gray"))
+     (:background "DarkRed"))
     (t
      ()))
   "*Face used by hl-line.")
@@ -388,7 +397,7 @@
                     (setq initial-frame-alist '((width . 450)(height . 85)(top . 10)(left . 10)))
                     (set-background-color "Black")
                     (set-foreground-color "White")
-                    (set-cursor-color "Gray")
+                    (set-cursor-color "tomato1")
                     ))
 
 ;;; line-number
@@ -715,10 +724,6 @@
 (define-key php-mode-map (kbd "C-c C-o") 'hs-toggle-hiding)
 (define-key php-mode-map (kbd "C-c C-f") 'hs-toggle)
 
-;; geben xdebug用
-;;(autoload 'geben "geben" "DBGp protocol front-end" t)
-
-
 ;; (add-to-list 'auto-mode-alist '("\\.php$" . html-mode))
 ;; (add-to-list 'load-path "~/.emacs.d/elisp/mmm-mode")
 ;; (require 'mmm-mode)
@@ -882,10 +887,15 @@
 
 (require 'auto-rsync)
 (auto-rsync-mode t)
+
+(custom-set-variables
+ '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.*'"))
+
 (setq auto-rsync-dir-alist
        '(
-        ("/Users/amachi/programs/php-common" . "mer:/home/amachi/php-common")
-        ("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
+        ("/Users/amachi/programs/platform-api" . "pf:/home/amachi/platform-api")
+        ("/Users/amachi/programs/php-common" . "pf:/home/amachi/php-common")
+        ;;("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
         ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
         ))
 

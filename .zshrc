@@ -1,4 +1,6 @@
 ######################## 基本設定 .bash_profileとほぼ同じ
+eval `ssh-agent -s`
+# ssh-add ~/.ssh/id_dsa
 
 case "${OSTYPE}" in
 # MacOSX
@@ -27,6 +29,11 @@ alias imgdim='sips -g pixelHeight -g pixelWidth $1'
 alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done'
 alias server='sudo service nginx'
+
+function girn() {
+   grep -irn "$1" `pwd` --exclude-dir=$2
+}
+
 # alias server='sudo service apache
 export ncnf="/etc/nginx/conf.d"
 
