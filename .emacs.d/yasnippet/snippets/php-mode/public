@@ -1,11 +1,12 @@
-// {{{ public function ${1:class}( )
-    /**
-     * $4
-     * @param $0 ${2:param}
-     * @return $3
-     */
+# -*- mode: snippet -*-
+#name : commment public function
+# --
+/**
+    * $5
+    * @param $3 ${2:param}
+    * @return $4
+    */
     public function $1($2)
     {
-
+        $0
     }
-    // }}}

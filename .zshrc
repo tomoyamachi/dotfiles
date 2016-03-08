@@ -1,6 +1,10 @@
 ######################## 基本設定 .bash_profileとほぼ同じ
 eval `ssh-agent -s`
 # ssh-add ~/.ssh/id_dsa
+## emacs用の環境変数を作成
+perl -wle \
+    'do {print qq/(setenv "$_" "$ENV{$_}")/if exists $ENV{$_}} for @ARGV' \
+    PATH > ~/.emacs.d/shellenv.el
 
 case "${OSTYPE}" in
 # MacOSX
@@ -291,6 +295,9 @@ zstyle ':zle:*' word-style unspecified
 
 ################ コマンド履歴設定 ################
 HISTFILE=$HOME/.zsh_history
+HISTTIMEFORMAT="[%Y/%M/%D %H:%M:%S] "
+HISTIGNORE=ls:history
+HISTIGNORE=pwd:history
 HISTSIZE=50000
 SAVEHIST=50000
 setopt hist_ignore_dups     # ignore duplication command history list

@@ -889,12 +889,18 @@ kages/") t)
 (auto-rsync-mode t)
 
 (custom-set-variables
- '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.*'"))
+ '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*'"))
 
 (setq auto-rsync-dir-alist
        '(
-        ("/Users/amachi/programs/platform-api" . "pf:/home/amachi/platform-api")
-        ("/Users/amachi/programs/php-common" . "pf:/home/amachi/php-common")
+        ("/Users/amachi/programs/platform-api" . "pf_dev:/home/amachi/platform-api")
+        ("/Users/amachi/programs/product-api" . "pf_dev:/home/amachi/product-api")
+        ("/Users/amachi/programs/php-common" . "pf_dev:/home/amachi/php-common")
+        ("/Users/amachi/programs/php-phalcon" . "pf_dev:/home/amachi/php-phalcon")
+        ("/Users/amachi/programs/gcpn_connect" . "pf_prod:/home/ec2-user/gcpn_connect")
+        ("/Users/amachi/programs/dp-elplano" . "news_dev:/home/bitnami/apps/wordpress/htdocs/wp-content/themes/dp-elplano")
+        ("/Users/amachi/programs/drive_optimizer" . "pf_dev:/home/amachi/drive_optimizer")
+        ("/Users/amachi/programs/carrier-settlement" . "docomo_aws:/home/snout/vhost/henteko.jp")
         ;;("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
         ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
         ))

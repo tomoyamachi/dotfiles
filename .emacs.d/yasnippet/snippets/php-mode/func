@@ -1,11 +1,12 @@
-// {{{ ${1:type} function ${2:class}()
-    /**
-     * $5
-     * @param $0 ${3:param}
-     * @return $4
-     */
-    $1 function $2($3)
+# -*- mode: snippet -*-
+#name : commment public function
+# --
+/**
+    * $6
+    * @param $4 ${3:param}
+    * @return $5
+    */
+    ${1:type} function $2($3)
     {
-
+        $0
     }
-    // }}}

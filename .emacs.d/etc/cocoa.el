@@ -45,3 +45,24 @@
 ;; # これは起動時に default-frame-alist に従ったフレームが
 ;; # 作成されない現象への対処
 (set-face-font 'default "fontset-myfonts")
+
+
+
+(load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+(dolist (path (reverse (split-string (getenv "PATH")":")))
+  (add-to-list 'exec-path path))
+
+(require 'gtags)
+(require 'anything-gtags)
+
+;; キーバインド
+(setq gtags-mode-hook
+      '(lambda ()
+         (define-key gtags-mode-map "\C-cs" 'gtags-find-symbol)
+         (define-key gtags-mode-map "\C-cr" 'gtags-find-rtag)
+         (define-key gtags-mode-map "\C-ct" 'gtags-find-tag)
+         (define-key gtags-mode-map "\C-cf" 'gtags-parse-file)))
+;; gtags-mode を使いたい mode の hook に追加する
+(add-hook 'c-mode-common-hook
+          '(lambda()
+             (gtags-mode 1)))
