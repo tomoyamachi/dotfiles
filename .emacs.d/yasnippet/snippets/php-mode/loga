@@ -1,0 +1,2 @@
+$log = \GApi\Models\Util\Log::factory();
+$log->debug(\Gcl\Util\GJson::serialize(\$${1:name}));

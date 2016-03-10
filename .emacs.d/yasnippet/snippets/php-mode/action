@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : controllerAction
+# --
+/**
+    * $2
+    */
+    public function $1Action()
+    {
+        $0
+    }
