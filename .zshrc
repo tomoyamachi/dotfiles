@@ -295,7 +295,8 @@ zstyle ':zle:*' word-style unspecified
 
 ################ コマンド履歴設定 ################
 HISTFILE=$HOME/.zsh_history
-HISTTIMEFORMAT="[%Y/%M/%D %H:%M:%S] "
+alias history='fc -il 1'
+
 HISTIGNORE=ls:history
 HISTIGNORE=pwd:history
 HISTSIZE=50000

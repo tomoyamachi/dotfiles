@@ -2,11 +2,11 @@
 #name : commment public function
 # --
 /**
-    * $6
-    * @param $4 ${3:param}
-    * @return $5
+    * $3
+${4:    * @param ${5:type} ${6:\$parameter}}
+${7:    * @return ${8:type}}
     */
-    ${1:type} function $2($3)
+    ${1:type} function $2($6)
     {
         $0
     }
