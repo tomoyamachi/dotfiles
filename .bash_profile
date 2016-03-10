@@ -1,4 +1,6 @@
 [[ $EMACS = t ]] && unsetopt zle
+/bin/zsh
+
 ##canythings
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/dotfiles/shells:$PATH
 #alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
@@ -11,5 +13,3 @@ alias pe="ps -ax | grep Emacs"
 
 alias ll="ls -l"
 alias la="ls -a"
-
-/bin/zsh

@@ -1,6 +1,25 @@
 ######################## 基本設定 .bash_profileとほぼ同じ
 eval `ssh-agent -s`
-# ssh-add ~/.ssh/id_dsa
+# 秘密鍵ファイル
+KEY_FILENAME='id_dsa'
+# パスフレーズを登録すれば自動でssh-addする
+PASSPHRASE=''
+if [ "$PASSPHRASE" != "" ]; then
+expect -c "
+ set timeout -1
+ spawn ssh-add $HOME/.ssh/$KEY_FILENAME
+ expect {
+     \"Enter passphrase for\" {
+         send \"$PASSPHRASE\r\"
+     }
+ }
+ expect {
+     \"denied\" { exit 1 }
+     eof { exit 0 }
+ }
+"
+fi
+
 ## emacs用の環境変数を作成
 perl -wle \
     'do {print qq/(setenv "$_" "$ENV{$_}")/if exists $ENV{$_}} for @ARGV' \
