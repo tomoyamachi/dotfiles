@@ -24,4 +24,4 @@ if [ "$HOSTNAME" = 'systg' ]; then
     . ~/.sshagent
 fi
 
-export PATH=$HOME/dotfiles/shells:HOME/dotfiles/gcpn_shells:$PATH:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells
+export PATH=$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$PATH:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells
