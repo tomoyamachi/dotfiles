@@ -24,11 +24,11 @@ alias reload="source $HOME/.zshrc"
 alias mute='/usr/bin/osascript -e "set volume 0"'
 alias cdcopy='pwd|pbcopy'
 alias imgdim='sips -g pixelHeight -g pixelWidth $1'
-alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done'
+alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'" # 現在のIPアドレスを取得
+alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done' # 時計
 alias server='sudo service nginx'
 
-alias h='cd ~'
+alias h='cd ~' # go to home directory
 alias pa='ps auxwwww'
 alias pspgid='ps axwww -o "ppid pgid pid user fname args"'
 alias iops='ps auxwwww -L|awk "\$10 ~ /(D|STAT)/{print}"'
