@@ -889,7 +889,7 @@ kages/") t)
 (auto-rsync-mode t)
 
 (custom-set-variables
- '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*'"))
+ '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*'"))
 
 (setq auto-rsync-dir-alist
        '(
