@@ -892,7 +892,7 @@ kages/") t)
  '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*'"))
 
 (setq auto-rsync-dir-alist
-       '(
+      '(
         ("/Users/amachi/programs/platform-api" . "pf_dev:/home/amachi/platform-api")
         ("/Users/amachi/programs/product-api" . "pf_dev:/home/amachi/product-api")
         ("/Users/amachi/programs/php-common" . "pf_dev:/home/amachi/php-common")
@@ -911,3 +911,10 @@ kages/") t)
 ;; (require 'yaml-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 ;; (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+
+(defconst *dmacro-key* "\C-t" "繰返し指定キー")
+(global-set-key *dmacro-key* 'dmacro-exec)
+(autoload 'dmacro-exec "dmacro" nil t)
+
+(require 'feature-mode)
+(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
