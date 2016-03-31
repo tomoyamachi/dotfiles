@@ -1,1 +1,1 @@
-(setenv "PATH" "/usr/local/bin:/usr/local/sbin:/Users/amachi/dotfiles/shells:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin")
+(setenv "PATH" "/usr/local/bin:/usr/local/sbin:/Users/amachi/dotfiles/shells:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/amachi/dotfiles/shells:/Users/amachi/dotfiles/gcpn_shells:/Users/amachi/bkcd_shells:/Users/amachi/dotfiles/bkrs_shells:/Users/amachi/bin")
