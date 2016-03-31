@@ -19,7 +19,9 @@ esac
 alias sudo='sudo ' # sudoでaliasを認識
 alias server='sudo service nginx' # nginxの操作
 alias memcached='sudo service memcached' # nginxの操作
-alias tree='pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g''
+
+# treeをインストールせずに、代替コマンドを利用
+alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
 
 alias history='fc -il 1'
 alias hg='history 100 | grep '
