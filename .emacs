@@ -893,8 +893,10 @@ kages/") t)
 
 (setq auto-rsync-dir-alist
       '(
+        ("/Users/amachi/programs/linebot" . "pf_dev:/home/amachi/linebot")
         ("/Users/amachi/programs/platform-api" . "pf_dev:/home/amachi/platform-api")
         ("/Users/amachi/programs/product-api" . "pf_dev:/home/amachi/product-api")
+        ("/Users/amachi/programs/api-phalcon" . "pf_dev:/home/amachi/api-phalcon")
         ("/Users/amachi/programs/php-common" . "pf_dev:/home/amachi/php-common")
         ("/Users/amachi/programs/php-phalcon" . "pf_dev:/home/amachi/php-phalcon")
         ("/Users/amachi/programs/gcpn_connect" . "pf_prod:/home/ec2-user/gcpn_connect")
@@ -918,3 +920,18 @@ kages/") t)
 
 (require 'feature-mode)
 (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+
+;; golang用
+(with-eval-after-load 'go-mode
+  ;; auto-complete
+  (require 'go-autocomplete)
+
+  ;; company-mode
+  ;; (add-to-list 'company-backends 'company-go)
+
+  ;; eldoc
+  (add-hook 'go-mode-hook 'go-eldoc-setup)
+
+  ;; key bindings
+  (define-key go-mode-map (kbd "M-.") 'godef-jump)
+  (define-key go-mode-map (kbd "M-,") 'pop-tag-mark))
