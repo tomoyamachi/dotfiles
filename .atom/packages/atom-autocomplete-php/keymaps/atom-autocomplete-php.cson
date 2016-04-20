@@ -1,0 +1,4 @@
+'atom-text-editor':
+  'ctrl-alt-n': 'atom-autocomplete-php:namespace'
+  'ctrl-alt-g': 'atom-autocomplete-php:goto'
+  'ctrl-shift-Z': 'atom-autocomplete-php:goto-backtrack'
