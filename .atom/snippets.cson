@@ -25,7 +25,7 @@
     'body' : 'fmt.Printf("\\\\n**** VARNAME : ${1:varname}\\\\n %#v\\\\n****\\\\n", $1)'
   'Type method':
     'prefix': 'tf'
-    'body' : 'func (${1:targetTypeVarName} ${2:targetType}) ${3:funcName}(${4:Parameters}) ${5:returnType} {\n  $0\n}'
+    'body' : 'func (${1:targetTypeVarInfo}) ${2:funcName}(${3:Parameters}) ${4:returnType} {\n  $0\n}'
   'Implicit variable':
     'prefix' : 'iv'
     'body' : '${1:varName} := ${2:value}'

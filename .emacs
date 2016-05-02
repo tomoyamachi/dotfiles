@@ -889,11 +889,12 @@ kages/") t)
 (auto-rsync-mode t)
 
 (custom-set-variables
- '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*'"))
+ '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock'"))
 
 (setq auto-rsync-dir-alist
       '(
         ("/Users/amachi/programs/linebot" . "pf_dev:/home/amachi/linebot")
+        ("/Users/amachi/programs/yotsuya-treasure-site" . "pf_dev:/home/amachi/treasure-api")
         ("/Users/amachi/programs/platform-api" . "pf_dev:/home/amachi/platform-api")
         ("/Users/amachi/programs/product-api" . "pf_dev:/home/amachi/product-api")
         ("/Users/amachi/programs/api-phalcon" . "pf_dev:/home/amachi/api-phalcon")
@@ -902,7 +903,8 @@ kages/") t)
         ("/Users/amachi/programs/gcpn_connect" . "pf_prod:/home/ec2-user/gcpn_connect")
         ("/Users/amachi/programs/dp-elplano" . "news_dev:/home/bitnami/apps/wordpress/htdocs/wp-content/themes/dp-elplano")
         ("/Users/amachi/programs/drive_optimizer" . "pf_dev:/home/amachi/drive_optimizer")
-        ("/Users/amachi/programs/carrier-settlement" . "docomo_aws:/home/snout/vhost/henteko.jp")
+        ;;("/Users/amachi/programs/carrier-settlement" . "docomo_aws:/home/snout/vhost/henteko.jp")
+        ("/Users/amachi/programs/carrier-settlement" . "docomo_ssl:/home/snout/vhost/henteko.jp")
         ;;("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
         ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
         ))
