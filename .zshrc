@@ -459,24 +459,3 @@ command /bin/mv $1 ~/.Trash/$NAME
 echo "No such file or directory: $file"
        fi
 }
-
-
-
-# case "${OSTYPE}" in
-# # Mac(Unix)
-# darwin*)
-#     # ここに設定
-#     [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
-#     ;;
-# # Linux
-# linux*)
-#     # ここに設定
-#     [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
-#     ;;
-# esac
-
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/amachi/Downloads/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables shell command completion for gcloud.
-source '/Users/amachi/Downloads/google-cloud-sdk/completion.zsh.inc'

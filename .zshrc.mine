@@ -3,4 +3,17 @@ export KEY_FILENAME='id_dsa'
 # パスフレーズを登録すれば自動でssh-addする
 export PASSPHRASE=''
 
-PATH=$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells
+PATH=$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells:$HOME/bin
+
+
+case "${OSTYPE}" in
+darwin*)
+    source '~/Downloads/google-cloud-sdk/path.zsh.inc'
+    source '~/Downloads/google-cloud-sdk/completion.zsh.inc'
+#    [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
+#    ;;
+# linux*)
+#     # ここに設定
+#     [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
+     ;;
+esac
