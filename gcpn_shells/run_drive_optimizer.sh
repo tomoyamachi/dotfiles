@@ -36,7 +36,7 @@ cd $PROJECTROOT && ./bin/gpl-task database generateClass
 
 echo "初期データをSQLに保存"
 find $PROJECTROOT/var/sql/ -name "*.sql" -prune -o -type f | while read FILE; do
-    mysql -uroot product_api < $FILE
+    mysql -uroot $2 < $FILE
 done
 
 echo "完了しました"
