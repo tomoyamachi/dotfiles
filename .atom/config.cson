@@ -3,6 +3,7 @@
   editor:
     fontSize: 11
     invisibles: {}
+    softWrap: true
   "exception-reporting":
     userId: "671d6e4a-bc2a-7463-484e-8589eac21018"
   "go-debug":
@@ -11,3 +12,6 @@
     showErrorPanel: false
   welcome:
     showOnStartup: false
+".source.gfm":
+  "wrap-guide":
+    "enabled": false
