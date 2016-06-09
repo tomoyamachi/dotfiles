@@ -474,3 +474,9 @@ echo "No such file or directory: $file"
 #     [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
 #     ;;
 # esac
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/amachi/Downloads/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/amachi/Downloads/google-cloud-sdk/completion.zsh.inc'

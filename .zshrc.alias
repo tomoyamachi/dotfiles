@@ -19,6 +19,11 @@ esac
 alias sudo='sudo ' # sudoでaliasを認識
 alias server='sudo service nginx' # nginxの操作
 alias memcached='sudo service memcached' # nginxの操作
+alias apc='sudo service php-fpm' # apcキャッシュ削除
+alias cache="sudo /etc/init.d/memcached"
+alias cron="sudo /etc/init.d/crond"
+
+alias ready='memcached restart && apc restart'
 
 # treeをインストールせずに、代替コマンドを利用
 alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
@@ -78,9 +83,6 @@ alias -s {png,jpg,bmp,PNG,JPG,BMP}=eog
 alias -s html=firefox
 
 #cd コマンドでそれぞれの場所へ移動
-alias server="sudo /etc/init.d/httpd"
-alias cache="sudo /etc/init.d/memcached"
-alias cron="sudo /etc/init.d/crond"
 
 # エラーログやシステムログをtailで見る(デフォルト30行)
 alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
