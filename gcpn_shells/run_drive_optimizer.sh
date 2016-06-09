@@ -7,19 +7,16 @@ do
     esac
 done
 DRIVEROOT="${HOME}/drive_optimizer"
-if [ "$1" ]; then
+
+if [ "$3" ]; then
+    PROJECTROOT="$3"
+else
     for f in ${HOME}'/'${1}*
     do
         PROJECTROOT=$f/
+         echo $PROJECTROOT
         break
     done
-else
-    if [ "$3" ]; then
-        PROJECTROOT="$3"
-    else
-        echo 'Invalid Project Path'
-        exit 1
-    fi
 fi
 
 echo "driveからデータを更新"
