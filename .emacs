@@ -897,8 +897,8 @@ kages/") t)
         ("/Users/amachi/programs/linebot" . "pf_dev:/home/amachi/linebot")
 
         ;; deployサーバ関連
-        ("/Users/amachi/programs/deploy/bin" . "pf_products:/home/ec2-user/bin")
-        ("/Users/amachi/programs/deploy/project/config" . "pf_products:/home/ec2-user/projects/config")
+        ("/Users/amachi/dotfiles/gcpn_shells/deploy" . "pf_products:/home/ec2-user/bin")
+        ("/Users/amachi/programs/conf-pf" . "pf_products:/home/ec2-user/conf")
 
         ;; プラットフォーム関連 → pf_devへの動機
         ("/Users/amachi/programs/yotsuya-treasure-site" . "pf_dev:/home/amachi/treasure-api")
