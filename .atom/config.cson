@@ -12,6 +12,6 @@
     showErrorPanel: false
   welcome:
     showOnStartup: false
-".source.gfm":
+".gfm.source":
   "wrap-guide":
-    "enabled": false
+    enabled: false
