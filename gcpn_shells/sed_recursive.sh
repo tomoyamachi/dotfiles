@@ -13,7 +13,7 @@ do
 done
 
 if [ "$1" ]; then
-    TARGET_DIR=$1
+    TARGET_DIR="$@"
 else
     echo "対象のディレクトリを指定してください"
     exit 1
@@ -29,7 +29,7 @@ read YES_OR_NO
 
 if [ "$YES_OR_NO" = "y" ]; then
     echo "変更を実行します\n"
-    COMMAND="sed  -i -e \"s/$BEFORE/$AFTER/g\""
+    COMMAND="sed  -i -e \"s:$BEFORE:$AFTER:g\""
 else
     echo "DRY RUNします\n"
     COMMAND="sed -e \"s/$BEFORE/$AFTER/g\""
