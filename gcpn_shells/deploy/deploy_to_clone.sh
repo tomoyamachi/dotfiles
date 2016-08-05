@@ -56,7 +56,7 @@ if [[ "$ENV" = "stage" ]]; then
             TARGETDIR=`echo "$FILE" | sed "s:$REPLACESTRING:\1:g"`
 
             echo " **** COPY FROM :"$FILE", TO : $PROJNAME/app/$TARGETDIR/config/config.d/config.php"
-            scp $FILE ec2-user@$host:/home/ec2-user/projects/$PROJNAME/config/config.d/$TARGETFILENAME
+            scp $FILE ec2-user@$host:/home/ec2-user/projects/$PROJNAME/app/$TARGETDIR/config/config.d/config.php
         done
 
     done

@@ -36,11 +36,24 @@ fi
 # タグ名を検索
 TAGNAME=$PROJNAME-$ENV
 
-echo "deploy先サーバのタグ名は 「$TAGNAME」です。よろしいですか？(y)"
-read YES_OR_NO
-if [ "$YES_OR_NO" = "y" ]; then
-    echo '同期を実行します'
-else
-    echo '終了します'
-    exit 1
-fi
+FLAG=FALSE
+while getopts y OPT; do
+   case $OPT in
+     y) FLAG=TRUE
+        ;;
+     \?) echo "Usage: $0 [-y]" 1>&2
+         exit 1
+         ;;
+   esac
+done
+
+# if [[ $FLAG -eq TRUE ]]; then
+#     echo "指定したタグ名は 「$TAGNAME」です。よろしいですか？(y)"
+#     read YES_OR_NO
+#     if [ "$YES_OR_NO" = "y" ]; then
+#         echo '同期を実行します'
+#     else
+#         echo '終了します'
+#         exit 1
+#     fi
+# fi
