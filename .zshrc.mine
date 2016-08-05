@@ -1,15 +1,21 @@
+eval "$(rbenv init -)"
+
 # 秘密鍵ファイル
 export KEY_FILENAME='id_dsa'
 # パスフレーズを登録すれば自動でssh-addする
 export PASSPHRASE=''
 
-PATH=$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells:$HOME/bin
+PATH=$HOME/.evm/bin:$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells:$HOME/bin
 
+
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 case "${OSTYPE}" in
 darwin*)
-    source '~/Downloads/google-cloud-sdk/path.zsh.inc'
-    source '~/Downloads/google-cloud-sdk/completion.zsh.inc'
+    source "$HOME/programs/google-cloud-sdk/path.zsh.inc"
+    source "$HOME/programs/google-cloud-sdk/completion.zsh.inc"
 #    [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
 #    ;;
 # linux*)
