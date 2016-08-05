@@ -895,23 +895,28 @@ kages/") t)
       '(
         ;; chatbot関連
         ("/Users/amachi/programs/linebot" . "pf_dev:/home/amachi/linebot")
+        ("/Users/amachi/programs/gcpn_stats" . "deploy_gcpn:/home/ec2-user/tmp_projects/gcpn_stats")
 
         ;; deployサーバ関連
         ("/Users/amachi/dotfiles/gcpn_shells/deploy" . "pf_products:/home/ec2-user/bin")
         ("/Users/amachi/programs/conf-pf" . "pf_products:/home/ec2-user/conf")
+        ("/Users/amachi/programs/gcpn_connect" . "pf_products:/home/ec2-user/data/gcpn_connect")
+        ("/Users/amachi/programs/henteko.jp" . "docomo_aws:/var/www/vhost/henteko.jp")
+        ("/Users/amachi/programs/ochigame.net" . "docomo_aws:/var/www/vhost/ochigame.net")
 
         ;; プラットフォーム関連 → pf_devへの動機
         ("/Users/amachi/programs/yotsuya-treasure-site" . "pf_dev:/home/amachi/treasure-api")
         ("/Users/amachi/programs/platform-api" . "pf_dev:/home/amachi/platform-api")
         ("/Users/amachi/programs/product-api" . "pf_dev:/home/amachi/product-api")
+        ;;("/Users/amachi/programs/product-api" . "pf_tool:/home/ec2-user/projects/product-api")
         ("/Users/amachi/programs/api-phalcon" . "pf_dev:/home/amachi/api-phalcon")
+        ;;("/Users/amachi/programs/api-phalcon" . "pf_tool:/home/ec2-user/projects/product-api/var/composer/vendor/tomoya-amachi/api-phalcon")
         ("/Users/amachi/programs/php-common" . "pf_dev:/home/amachi/php-common")
         ("/Users/amachi/programs/php-phalcon" . "pf_dev:/home/amachi/php-phalcon")
-        ("/Users/amachi/programs/gcpn_connect" . "pf_accounts:/home/ec2-user/gcpn_connect")
         ;;("/Users/amachi/programs/dp-elplano" . "news_dev:/home/bitnami/apps/wordpress/htdocs/wp-content/themes/dp-elplano")
         ;;("/Users/amachi/programs/drive_optimizer" . "pf_dev:/home/amachi/drive_optimizer")
         ;;("/Users/amachi/programs/carrier-settlement" . "docomo_aws:/home/snout/vhost/henteko.jp")
-        ("/Users/amachi/programs/carrier-settlement" . "docomo_ssl:/home/snout/vhost/henteko.jp")
+        ;;("/Users/amachi/programs/carrier-settlement" . "docomo_ssl:/home/snout/vhost/henteko.jp")
         ;;("/Users/amachi/programs/relocal" . "mer:/home/amachi/relocal")
         ;; ("/path/to/src2/" . "username@hostname:/path/to/dest2/")
         ))
