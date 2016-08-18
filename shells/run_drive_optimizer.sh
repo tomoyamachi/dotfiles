@@ -1,0 +1,39 @@
+#!/bin/sh
+# spread sheetから最新の情報に更新し、必要な操作を実施する
+while getopts h: OPT
+do
+    case $OPT in
+        h)  echo "spread sheetのデータをプロジェクトに反映。Usage : run_drive_optimizer <project名> <書き込み先データベース名> <プロジェクトパス> \r プロジェクト名とプ>ロジェクトパスが同じの場合、自動でホームディレクトリから対象のプロジェクトパスを選択" 1>&2 ;;
+    esac
+done
+DRIVEROOT="${HOME}/drive_optimizer"
+
+if [ "$3" ]; then
+    PROJECTROOT="$3"
+else
+    for f in ${HOME}'/'${1}*
+    do
+        PROJECTROOT=$f/
+         echo $PROJECTROOT
+        break
+    done
+fi
+
+echo "driveからデータを更新"
+php $DRIVEROOT/driveToData.php $1 $PROJECTROOT
+
+echo "migrationファイル作成"
+cd $PROJECTROOT && ./bin/gpl-task migration generate
+
+echo "migrationファイルを実行"
+cd $PROJECTROOT && ./bin/gpl-task migration run
+
+echo "新しい構造用のモデルクラスを作成"
+cd $PROJECTROOT && ./bin/gpl-task database generateClass
+
+echo "初期データをSQLに保存"
+find $PROJECTROOT/var/sql/ -name "*.sql" -prune -o -type f | while read FILE; do
+    mysql -uroot $2 < $FILE
+done
+
+echo "完了しました"
