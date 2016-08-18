@@ -33,7 +33,6 @@ alias hg='history 100 | grep '
 alias ql="qlmanage -p 2>/dev/null"
 alias reload="source $HOME/.zshrc"
 alias mute='/usr/bin/osascript -e "set volume 0"'
-alias cdcopy='pwd|pbcopy'
 alias imgdim='sips -g pixelHeight -g pixelWidth $1'
 alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'" # 現在のIPアドレスを取得
 alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done' # 時計
@@ -84,43 +83,14 @@ alias -s html=firefox
 
 #cd コマンドでそれぞれの場所へ移動
 
-# エラーログやシステムログをtailで見る(デフォルト30行)
-alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
-alias aerror="tail -f -n 100 ${SY_LOG}apache/error.log"
-alias aaccess="tail -f -n 100 ${SY_LOG}apache/access.log"
-alias "sd"="svn diff -x -w"
-
 # $1以下のフォルダから $2が含まれる文字列を表示
 alias fgrep='. $HOME/dotfiles/shells/find_string_in_folder'
-alias sp='. $HOME/dotfiles/shells/change_project'
-alias c='. $HOME/dotfiles/shells/change_directory_in_project'
-alias pe="ps -ax | grep Emacs"
-alias ke="ps -ax | grep 'Emac[s]' | awk '{print $1}' | xargs kill -9"
 
 #export SVN_SSH="ssh -l amachi -i /Users/amachitomoya/.ssh/id_rsa"
 #. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
 # $1以下のフォルダから $2が含まれる文字列を表示
 alias fgrep='. find_string_in_folder'
-alias sp='. change_project'
-alias c='. change_directory_in_project'
-
-_Z_CMD=j
-. ~/dotfiles/z/z.sh
-precmd() {
-  _z --add "$(pwd -P)"
-}
-
-# tmux
-alias -g CA='| canything'
-# tmuxでの移動
-alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
-#function chpwd(){
-#  [ -n $TMUX ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD /bin/zsh
-#}
-
-DOTFILE=~/dotfiles
-alias fgrep='. $DOTFILE/shells/find_string_in_folder'
 
 alias where="command -v"
 case "${OSTYPE}" in
