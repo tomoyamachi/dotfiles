@@ -5,12 +5,10 @@ export KEY_FILENAME='id_dsa'
 # パスフレーズを登録すれば自動でssh-addする
 export PASSPHRASE=''
 
-PATH=$HOME/.evm/bin:$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells:$HOME/bin
-
-
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+export PATH=$HOME/.evm/bin:$PATH:$HOME/dotfiles/shells:$HOME/bin:$GOROOT/bin:$GOPATH/bin
 
 case "${OSTYPE}" in
 darwin*)

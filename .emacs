@@ -898,7 +898,7 @@ kages/") t)
         ("/Users/amachi/programs/gcpn_stats" . "deploy_gcpn:/home/ec2-user/tmp_projects/gcpn_stats")
 
         ;; deployサーバ関連
-        ("/Users/amachi/dotfiles/gcpn_shells/deploy" . "pf_products:/home/ec2-user/bin")
+        ("/Users/amachi/dotfiles/shells/deploy" . "pf_products:/home/ec2-user/bin")
         ("/Users/amachi/programs/conf-pf" . "pf_products:/home/ec2-user/conf")
         ("/Users/amachi/programs/gcpn_connect" . "pf_products:/home/ec2-user/data/gcpn_connect")
         ("/Users/amachi/programs/henteko.jp" . "docomo_aws:/var/www/vhost/henteko.jp")
