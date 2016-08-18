@@ -1,9 +1,0 @@
-#!/bin/bash
-folder="web"
-files=""
-for f in ${folder}'/invite'*
-do
-files="${files} ${f}"
-done
-scp $files dev_bkrs:~/newtrunk/share/www/img/public/img/keyvs/
-ssh bkrs2 sh "~/shells/chmod.sh"
