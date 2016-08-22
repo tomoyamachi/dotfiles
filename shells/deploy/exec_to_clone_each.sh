@@ -1,19 +1,19 @@
 #!/bin/bash
 
-#rm ~/.ssh/known_hosts
+# 指定したタグ名のインスタンスに
+# ""でかこった部分のコマンドを実行
+# $ exec_to_clone.sh "command" project env
 
-if [ "$1" ]; then
-    TAGNAME=$1
-else
-    echo "デプロイしたいAutoScailingServerのTag : Nameのvalueを入れてください"
-fi
-
+command=$1
 shift
-command=$@
+
+WORKROOT=$(cd $(dirname $0);pwd)
+source $WORKROOT/get_target_tag.sh
 
 for host in $(get_clone_servers.sh $TAGNAME); do
-  host=`echo "$host" | sed s/\"//g`
-  ssh -t -t ec2-user@$host $command &
+    host=`echo "$host" | sed s/\"//g`
+    echo $command
+    ssh -t -t ec2-user@$host $command &
 done
 
 wait
