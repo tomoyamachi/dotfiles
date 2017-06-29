@@ -1,7 +1,9 @@
 [[ $EMACS = t ]] && unsetopt zle
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export GOPATH="$HOME/go"
+export PATH="$HOME/.goenv/bin:$PATH"
+eval "$(goenv init -)"
+
+
 
 for shellenv in `cat /etc/shells`; do
    if [ "$shellenv" = "/bin/zsh" ];then
