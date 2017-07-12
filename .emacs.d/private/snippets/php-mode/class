@@ -1,0 +1,17 @@
+/**
+ *  ${1:new_class}クラス
+ *
+ * $4
+ * Tomoya AMACHI
+ */
+
+class $1 ${2:extends ${3:package}} {
+
+	// {{{ const
+	//	}}}
+
+	// {{{ properties
+	// }}}
+
+    $0
+}

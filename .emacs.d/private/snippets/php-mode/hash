@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : hash
+# --
+array(
+  '${1:firstKey}' => ${2:firstValue},
+  '${3:secondKey}' => $0,
+);

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : echo
+# --
+echo $1, PHP_EOL;
+$0

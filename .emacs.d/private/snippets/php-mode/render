@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : snippet-text-bottom
+# --
+App::snippet('${1:text}')->$2setClass('$0')->render();

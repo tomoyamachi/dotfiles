@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : foreach
+# --
+
+foreach ($${1:list} as $${2:name}) {
+    $0
+}

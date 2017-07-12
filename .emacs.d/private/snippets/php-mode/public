@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+#name : commment public function
+# --
+/**
+    * $2
+${3:    * @param $4 ${5:param}}
+${6:    * @return $7}
+    */
+    public function $1($5)
+    {
+        $0
+    }

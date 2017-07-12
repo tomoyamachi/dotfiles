@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : addText
+# --
+->addText(${1:text})

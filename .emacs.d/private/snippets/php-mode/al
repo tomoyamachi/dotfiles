@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : addLink
+# --
+->addLink(${1:url},${2:text}${3:,color})

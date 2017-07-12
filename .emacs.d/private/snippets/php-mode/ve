@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : variable equal
+# --
+\$${1:name} = ${2:value};$0

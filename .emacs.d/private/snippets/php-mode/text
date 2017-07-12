@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : snippet-text
+# --
+App::snippet('text')->addLink($1,$2)->${3:setClass('${4:text-middle}')->}render();

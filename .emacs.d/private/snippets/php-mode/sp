@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : snippet-space
+# --
+App::snippet('space')->setHeight($1)->${2:setClass('${3:text-middle}')->}render();

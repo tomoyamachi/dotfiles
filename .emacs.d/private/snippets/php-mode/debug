@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : S::debug
+# --
+S::debug($0);
