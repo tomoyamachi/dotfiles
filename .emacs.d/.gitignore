@@ -47,7 +47,6 @@ python-*-docs-html
 .mc-lists.el
 
 # Private directory
-private/
 !private/README.md
 !private/snippets/README.md
 !private/local/README.md
