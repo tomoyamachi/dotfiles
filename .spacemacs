@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ruby
      csv
      nginx
      yaml
@@ -62,6 +63,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      feature-mode
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -352,7 +354,20 @@ you should place your code here."
     ;; use skkserve
     (setq skk-server-host "localhost")
     (setq skk-server-portnum 1178)
-  )
+    )
+
+  ;; auto-rsync
+  (load-file "~/.emacs.d/private/auto-rsync.el")
+  (require 'auto-rsync)
+  (auto-rsync-mode t)
+  (custom-set-variables
+   '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock'"))
+(setq auto-rsync-dir-alist
+      '(
+        ("/Users/amachi/programs/api-bizshift" . "bizapi:/home/tamachi/api-bizshift")
+        ))
+
+
 
   (require 'php-mode)
   (add-hook 'php-mode-hook
@@ -404,9 +419,11 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-rsync-command-option
+   "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock'")
  '(package-selected-packages
    (quote
-    (pangu-spacing japanese-holidays evil-tutor-ja avy-migemo migemo sticky ddskk cdb ccc csv-mode nginx-mode yaml-mode company web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data go-guru go-eldoc go-mode phpunit phpcbf php-extras php-auto-yasnippets helm-company helm-c-yasnippet fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck drupal-mode php-mode company-statistics auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete company-go nlinum smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (dockerfile-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv feature-mode rake minitest chruby bundler inf-ruby pangu-spacing japanese-holidays evil-tutor-ja avy-migemo migemo sticky ddskk cdb ccc csv-mode nginx-mode yaml-mode company web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data go-guru go-eldoc go-mode phpunit phpcbf php-extras php-auto-yasnippets helm-company helm-c-yasnippet fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck drupal-mode php-mode company-statistics auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete company-go nlinum smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
