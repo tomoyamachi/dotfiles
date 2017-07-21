@@ -1,0 +1,19 @@
+#!/bin/sh
+
+
+
+generate_post_data()
+{
+cat <<EOF
+{
+  "callback":"http://goodwith.tech"
+}
+EOF
+}
+
+if [ "$1" ]; then
+  curl -v -H "Accept: application/json" -H "Content-type: application/json"  POST -d "$(generate_post_data)" http://api-amachi.bizshift.cloud/v1/$1
+else
+  echo "endpointを指定してください"
+  exit 1
+fi

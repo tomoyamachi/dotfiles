@@ -1,0 +1,59 @@
+#!/bin/sh
+# sp - set project
+# プロジェクトフォルダを変更
+# それっぽいフォルダを選択し、移動を
+CMDNAME='basename $0'
+NBHOME="$HOME/programs/"
+
+while getopts h: OPT
+do
+    case $OPT in
+        h)  echo $str"プロジェクトフォルダを変えます。フォルダが特定できる最低限の条件で検索します。Usage : sp プロジェクトフォルダ名のヒント" 1>&2 ;;
+        \?) echo "Usage : sp プロジェクトフォルダ名のヒント" 1>&2
+            exit 1 ;;
+    esac
+done
+
+
+if [ "$1" ]; then
+    for f in ${NBHOME}'/'${1}*
+    do
+        export PROJ=$f
+        break
+    done
+else
+    export PROJ="$NBHOME/bkrs2"
+fi
+echo "プロジェクトフォルダは $PROJ に移動しました"
+
+export VIEWS="$PROJ/share/www/bkrs2/application/modules/main/views/"
+export CONTR="$PROJ/share/www/bkrs2/application/modules/main/controllers/"
+export TOOL="$PROJ/share/www/bkrs2-tool/application/modules/main/"
+export IMAGE="$PROJ/share/www/img/public/img/"
+export IMAGE_SP="$PROJ/share/www/img/public/img-sp/"
+export SY="$PROJ/lib/php/Synphonie/Bkrs2/"
+export MODEL="$PROJ/lib/php/Synphonie/Bkrs2/Master/"
+export SY_LOG="$PROJ/logs/bkrs2/"
+export BATCH="$PROJ/bin/bkrs2/batch/"
+export STATS="$PROJ/bin/bkrs2/app_stats/"
+
+alias cdh="cd ${PROJ}"               # home
+alias cdv="cd ${VIEWS}" # view
+alias cds="cd ${VIEWS}scripts" # view
+alias cdss="cd ${VIEWS}scripts-sp" # view
+alias cdc="cd ${CONTR}"         # controller
+alias cdf="cd ${SY}"            # framework
+alias cdt="cd ${TOOL}"         # bkrs2-tool
+alias cdi="cd ${IMAGE}"         # bkrs2-tool
+alias cdis="cd ${IMAGE_SP}"         # bkrs2-tool
+alias cdr="cd $PROJ/share/www/bkrs2/resource/"         # resource
+alias cdb="cd ${BATCH}"
+alias cdstats="cd ${STATS}"
+
+# エラーログやシステムログをtailで見る(デフォルト30行)
+alias debug="tail -f -n 100 ${SY_LOG}/zend/zend.log"
+alias aerror="tail -f -n 100 ${SY_LOG}/apache/error.log"
+alias aaccess="tail -f -n 100 ${SY_LOG}/apache/$1.log"
+
+#プロジェクトのルートフォルダへ移動
+cdh

@@ -1,0 +1,61 @@
+#!/bin/bash
+if [ "$1" ]; then
+    # 9バイト以降が、ステージのサイズ情報
+    i=10
+    str=""
+    while [ $i -le 17 ]; do
+    #動的に変数を生成
+        variable="$"$i
+        hex=`eval "hexdump -C $1 | head -1 | awk '{ print $variable }'"`
+        # デフォルトが小文字なので、大文字に変換
+        hex=`echo $hex | tr '[:lower:]' '[:upper:]'`
+        # 16進数から2進数に変換
+        bin=`echo "ibase=16;obase=2; $hex "|bc`
+        # 8ビットの2進数として表示
+        bin=`printf '%08d' ${bin}`
+        str="${str}${bin}"
+
+        i=`expr $i + 1`
+    done
+
+    #最初の5文字の値を10進数に
+    delimiter=`echo $str | cut -c 1-5`
+    delimiter=`echo "ibase=2; $delimiter "|bc`  # bc 複雑な計算を行う
+
+    #delimitaerの桁数で区切る
+    delimiter_start=6
+    xabin=$( echo $str | cut -c $delimiter_start-`expr $delimiter_start + $delimiter - 1` )
+
+    delimiter_start=`expr $delimiter_start + $delimiter`
+    xbbin=$( echo $str | cut -c $delimiter_start-`expr $delimiter_start + $delimiter - 1` )
+
+    delimiter_start=`expr $delimiter_start + $delimiter`
+    yabin=$( echo $str | cut -c $delimiter_start-`expr $delimiter_start + $delimiter - 1` )
+
+    delimiter_start=`expr $delimiter_start + $delimiter`
+    ybbin=$( echo $str | cut -c $delimiter_start-`expr $delimiter_start + $delimiter - 1` )
+
+    #それぞれの始点と終点を変数に保存
+    width_start=`echo "ibase=2; $xabin "|bc`
+    width_end=`echo "ibase=2; $xbbin "|bc`
+    height_start=`echo "ibase=2; $yabin "|bc`
+    height_end=`echo "ibase=2; $ybbin "|bc`
+
+    width=`expr \( $width_end - $width_start \) / 20`
+    echo 'width: '$width'px'
+    height=`expr \( $height_end - $height_start \) / 20`
+    echo 'height: '$height'px'
+
+    version=`hexdump -C "$1" | head -1 | awk '{ print $5 }'` # swfバージョン
+    version=`echo "ibase=2; $version "|bc`  # bc 複雑な計算を行う
+    echo 'version: '$version # 携帯電話で再生させたければ4
+
+    #バージョンが4でなかったら以上終了
+    if [[ $version -ne 4 ]]; then
+        exit 1
+    fi
+else
+    echo 'ファイル名を入力してください'
+    exit 1
+fi
+

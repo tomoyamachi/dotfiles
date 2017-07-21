@@ -1,0 +1,21 @@
+CMDNAME='basename $0'
+USAGE="USAGE : $CMDNAME [foldername] string"
+STRING=
+FOLDER=
+
+FILE=$1
+STRING=$2
+
+sed  -i -e "s/\$this->snippet('headline-au-\(.*\)')/App::snippet('div-au-\1')/g" "$FILE"
+sed  -i -e "s/\$this->emoji/App::emoji/g" "$FILE"
+sed  -i -e "s/\$this->snippet('spacer')/App::snippet('space')/g" "$FILE"
+sed  -i -e "s/\$this->snippet('center-link')/App::snippet('center-link')/g" "$FILE"
+sed  -i -e "s/\$this->snippet('text')/App::snippet('text')/g" "$FILE"
+sed  -i -e "s/\$this->snippet('image')/App::snippet('image')/g" "$FILE"
+sed  -i -e "s/\$snpt->img = \(.*\);$/\$img = \1;\n\$snpt->setImg(\$img);/g" "$FILE"
+sed  -i -e "s/\$this->snippet('bkrs2\/image-border').*render();$/App::snippet('app\/separator')->render();/g" "$FILE"
+sed  -i -e "s/\$this->snippet('form-\(.*\)')/App::snippet('form-\1')/g" "$FILE"
+
+sed  -i -e "s/\$this->snippet('bkrs2\/global-navi')->setLink(\(.*\))->setText(\(.*\))->render();$/App::snippet('navi-return')->setUrl(\1)->setCaption(\2)->render();/g" "$FILE"
+
+sed  -i -e "s/\$this->snippet('bkrs2\/header').*setColor(\(.*\)).*setTitle(.*\(.*\).*)->render();$/App::snippet('app\/headline')->setColor(\1)->addText(\2)->render();/g" "$FILE"
