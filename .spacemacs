@@ -64,6 +64,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       feature-mode
+                                      dockerfile-mode
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -320,6 +321,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (yas-global-mode t)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (setq windmove-wrap-around t)
   (windmove-default-keybindings)
   (global-set-key (kbd "S-C-y") 'helm-show-kill-ring)
@@ -327,6 +329,7 @@ you should place your code here."
   (global-set-key (kbd "C-;") 'helm-M-x)
   (global-set-key (kbd "C-i") 'yas-expand)
   (global-set-key (kbd "<tab>") 'yas-expand)
+  (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 
   ;; linum
   (require 'linum)
@@ -361,11 +364,14 @@ you should place your code here."
   (require 'auto-rsync)
   (auto-rsync-mode t)
   (custom-set-variables
-   '(auto-rsync-command-option "-avzq --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/schema/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock'"))
+   '(auto-rsync-command-option "-avzq --rsync-path='sudo rsync' --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock' --exclude 'var/composer'"))
+  ;;'(auto-rsync-command-option "-avzq --rsync-path='sudo rsync' --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'composer.lock'"))
+
 (setq auto-rsync-dir-alist
       '(
         ("/Users/amachi/programs/api-bizshift" . "bizapi:/home/tamachi/api-bizshift")
         ))
+
 
 
 
