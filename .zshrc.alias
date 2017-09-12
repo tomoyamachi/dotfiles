@@ -1,5 +1,5 @@
 case "${OSTYPE}" in
-# MacOSX
+    # MacOSX
     darwin*)
         alias e="/Applications/Emacs.app/Contents/MacOS/Emacs"
         alias ee="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
@@ -7,14 +7,61 @@ case "${OSTYPE}" in
         alias tc="tmux-pbcopy" # tmuxのコピーボードにあるものをMacと共有
         alias tp="pbpaste" # Macのクリップボードにあるものをtmuxにはりつけ
         alias tmux="tmuxx"
+        alias ls="ls -G -w"
+        alias history="fc -il 1 | peco"
         ;;
     #linux
     linux*)
         alias e="emacs"
         alias ee="emacsclient -n"
         alias se="sudo emacsclient -n"
+        alias ls="ls --color"
+        alias history='fc -il 1'
         ;;
 esac
+source <(kubectl completion zsh)
+alias dc='docker-compose'
+alias de='docker-compose exec '
+alias k='kubectl'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias ke='kubectl exec'
+
+function dsh() {
+   DOCKER_COMMAND=sh
+   if [ "$1" = "php-fpm" ]; then
+     DOCKER=COMMAND=bash
+   fi
+   docker-compose exec "$1" $DOCKER_COMMAND
+}
+
+function dmake() {
+   docker-compose exec php-fpm bash -c "cd api-base && make $@"
+}
+
+alias flushredis='de redis sh -c "redis-cli flushall && rm dump.rdb"'
+
+## cucumberを実行 -dオプションで返却データを出力
+function c() {
+    D=
+    O=
+    while :
+    do
+        case $1 in
+            -d) D="DEBUG=1"
+                shift
+                ;;
+            -o) O="OUTPUT=1"
+                shift
+                ;;
+            *)  break
+                ;;
+        esac
+    done
+   docker-compose exec cucumber sh -c "cd /var/www && cucumber $D $O $@"
+}
+
+alias tailweb='docker-compose exec webserver sh -c "tail -f /var/log/nginx/application.*.log"'
 
 alias sudo='sudo ' # sudoでaliasを認識
 alias server='sudo service nginx' # nginxの操作
@@ -28,7 +75,6 @@ alias ready='memcached restart && apc restart'
 # treeをインストールせずに、代替コマンドを利用
 alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
 
-alias history='fc -il 1'
 alias hg='history 100 | grep '
 alias ql="qlmanage -p 2>/dev/null"
 alias reload="source $HOME/.zshrc"
@@ -80,63 +126,13 @@ if [ `uname` = "Darwin" ]; then
   alias excel='open -a "Microsoft Excel" '
 fi
 alias -s {png,jpg,bmp,PNG,JPG,BMP}=eog
-alias -s html=firefox
+alias -s html=vivaldi
 
-#cd コマンドでそれぞれの場所へ移動
-
-# エラーログやシステムログをtailで見る(デフォルト30行)
-alias debug="tail -f -n 100 ${SY_LOG}zend/zend.log"
-alias aerror="tail -f -n 100 ${SY_LOG}apache/error.log"
-alias aaccess="tail -f -n 100 ${SY_LOG}apache/access.log"
-alias "sd"="svn diff -x -w"
-
-# $1以下のフォルダから $2が含まれる文字列を表示
-alias fgrep='. $HOME/dotfiles/shells/find_string_in_folder'
-alias sp='. $HOME/dotfiles/shells/change_project'
-alias c='. $HOME/dotfiles/shells/change_directory_in_project'
-alias pe="ps -ax | grep Emacs"
-alias ke="ps -ax | grep 'Emac[s]' | awk '{print $1}' | xargs kill -9"
-
-#export SVN_SSH="ssh -l amachi -i /Users/amachitomoya/.ssh/id_rsa"
-#. ~/docs/synphonie/shells/kinnosuke
 export SHUTDOWN_CONFIRM_FLAG=0
-# $1以下のフォルダから $2が含まれる文字列を表示
-alias fgrep='. find_string_in_folder'
-alias sp='. change_project'
-alias c='. change_directory_in_project'
-
-_Z_CMD=j
-. ~/dotfiles/z/z.sh
-precmd() {
-  _z --add "$(pwd -P)"
-}
-
-# tmux
-alias -g CA='| canything'
-# tmuxでの移動
-alias tmux="tmux -f $HOME/.tmux.`uname`.conf new `which zsh`"
-#function chpwd(){
-#  [ -n $TMUX ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD /bin/zsh
-#}
-
-DOTFILE=~/dotfiles
-alias fgrep='. $DOTFILE/shells/find_string_in_folder'
-
 alias where="command -v"
-case "${OSTYPE}" in
-freebsd*|darwin*)
-    alias ls="ls -G -w"
-    ;;
-linux*)
-    alias ls="ls --color"
-    ;;
-esac
-
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
-
-alias rebuild=". $HOME/dotfiles/gcpn_shells/run_drive_optimizer.sh"
