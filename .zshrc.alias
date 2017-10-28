@@ -26,7 +26,9 @@ alias k='kubectl'
 alias kg='kubectl get'
 alias kd='kubectl describe'
 alias ke='kubectl exec'
-
+alias ks='jsonnet -J ~/programs/kubernetes/ksonnet-lib'
+alias python='python3'
+alias pip='pip3'
 function dsh() {
    DOCKER_COMMAND=sh
    if [ "$1" = "php-fpm" ]; then
@@ -58,7 +60,10 @@ function c() {
                 ;;
         esac
     done
-   docker-compose exec cucumber sh -c "cd /var/www && cucumber $D $O $@"
+
+
+docker build ~/programs/api-bizshift/cucumber/ -t api-bizshift-cucumber
+docker run -it --rm --network=apibizshift_default --link api-bizshift-webserver api-bizshift-cucumber cucumber $D $O $@
 }
 
 alias tailweb='docker-compose exec webserver sh -c "tail -f /var/log/nginx/application.*.log"'
