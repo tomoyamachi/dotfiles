@@ -81,7 +81,7 @@ function c() {
     done
 
 
-docker build ~/programs/api-bizshift/cucumber/ -t api-bizshift-cucumber
+docker build ~/programs/bizshift/api-bizshift/cucumber/ -t api-bizshift-cucumber
 docker run -it --rm --network=apibizshift_default --link api-bizshift-webserver api-bizshift-cucumber cucumber $D $O $@
 }
 
