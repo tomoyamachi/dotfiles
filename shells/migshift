@@ -1,0 +1,2 @@
+#!/bin/zsh
+php ~/programs/spreadsheetMigrater/export2phalcon.php bizshift /Users/amachi/programs/api-bizshift/nginx/php-fpm/api-base && docker-compose exec php-fpm bash -c "cd api-base && ./bin/gpl-task database generateClass" && docker-compose exec php-fpm bash -c "cd api-base && ./bin/gpl-task migration generate && ./bin/gpl-task migration run"

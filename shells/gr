@@ -1,0 +1,52 @@
+#!/bin/sh
+# grn [ -iv ] string [ filename ]
+# -i 大文字、小文字の区別をしない
+
+CMDNAME='basename $0'
+USAGE="USAGE : $CMDNAME [foldername] string"
+STRING=
+FOLDER=
+I=
+
+if [ "$OPTIND" = 1 ];then
+    while getopts i: OPT
+    do
+        case $OPT in
+            i) I=-i ;;
+            ¥?) echo "$USAGE" 1>&2
+                exit 1
+                ;;
+        esac
+    done
+    shift `expr $OPTIND - 1`
+else
+    while :
+    do
+        case $1 in
+            -i) I=-i
+                shift
+                ;;
+            --) shift
+                break
+                ;;
+            -*) echo "$USAGE" 1>&2
+                exit 1
+                ;;
+            *)  break
+                ;;
+        esac
+    done
+fi
+
+
+STRING=$1
+
+# 指定されたフォルダがなければカレントディレクトリを確認
+if [ "$2" ]; then
+    FOLDER="$@"
+else
+    FOLDER="."
+fi
+
+
+grep -rn $I $STRING $FOLDER
