@@ -24,14 +24,22 @@ export GOPATH="$HOME/go"
 export PATH="$HOME/.goenv/bin:$PATH"
 eval "$(goenv init -)"
 
-#export GOROOT=/usr/local/opt/go/libexec
-#export GOPATH=$HOME
-#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+# brew install direnv
+eval "$(direnv hook zsh)"
+export EDITOR=vim
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
+
 
 case "${OSTYPE}" in
 darwin*)
     source "$HOME/programs/google-cloud-sdk/path.zsh.inc"
     source "$HOME/programs/google-cloud-sdk/completion.zsh.inc"
+    export HOMEBREW_GITHUB_API_TOKEN="f4b37121a519bd55cbf69690c3b63360a892b012"
+
 #    [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
 #    ;;
 # linux*)

@@ -43,6 +43,25 @@ function dmake() {
 
 alias flushredis='de redis sh -c "redis-cli flushall && rm dump.rdb"'
 
+function curl_task() {
+    domain=http://api-amachi.bizshift.cloud/
+    if [ "$1" = "dev" ]; then
+        domain=http://api.bizshift-dev.online/
+    fi
+
+    if [ "$1" = "stg" ]; then
+        domain=http://api.bizshift-stg.online/
+    fi
+
+    if [ "$1" = "prod" ]; then
+        domain=http://api.bizshift.cloud/
+    fi
+
+    echo $domain$2
+    curl -X POST -F "api_token=enGKZsxJuDCM3mXtMsQYTarGdgFw2Zux7KS3iJZHrbGPwFcq" \
+         $domain$2
+}
+
 ## cucumberを実行 -dオプションで返却データを出力
 function c() {
     D=
