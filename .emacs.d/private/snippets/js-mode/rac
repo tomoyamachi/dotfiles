@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : React Action Constant
+# --
+const ${2:name} = '${1:module}/$2';
+$0

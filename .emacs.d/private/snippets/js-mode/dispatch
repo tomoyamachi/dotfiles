@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : dispatch on redux-thunk
+# --
+dispatch(${1:parameter}).then((${2:return}) => {
+  $0
+});
