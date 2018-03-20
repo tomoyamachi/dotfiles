@@ -54,6 +54,7 @@ values."
                                       geiser
                                       jsonnet-mode
                                       rjsx-mode
+                                      prettier-js
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -387,11 +388,17 @@ you should place your code here."
               (setq indent-tabs-mode nil) ;;インデントはタブではなくスペース
               (setq js-indent-level 2) ;;スペースは２つ、デフォルトは4
               (setq js2-strict-missing-semi-warning nil))) ;;行末のセミコロンの警告はオフ
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (require 'prettier-js)
   (add-hook 'rjsx-mode-hook 'prettier-js-mode)
   (setq prettier-js-args '(
-                           "--trailing-comma" "all"
+                           "--jsx-bracket-same-line"
+                           "--single-quote"
+                           "--trailing-comma" "es5"
+                           "--arrow-parens" "always"
                            ))
+  (load-file "~/.emacs.d/private/flow.el")
+  (add-hook 'rjsx-mode-hook 'prettier-js-mode)
+
   ;; dr.racket
   (setq geiser-racket-binary "/usr/local/bin/racket")
   (setq geiser-active-implementations '(racket))
@@ -440,7 +447,7 @@ you should place your code here."
    "-avzq --rsync-path='sudo rsync' --exclude '*flymake*' --exclude '\\.git/*' --exclude '\\#.*' --exclude 'test/data/csv/*' --exclude 'config/config\\.d/schema\\.d/*' --exclude 'composer.lock' --exclude 'var/composer'")
  '(package-selected-packages
    (quote
-    (prettier-js mustache-mode flow-minor-mode rjsx-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic jsonnet-mode sql-indent geiser racket-mode faceup dockerfile-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv feature-mode rake minitest chruby bundler inf-ruby pangu-spacing japanese-holidays evil-tutor-ja avy-migemo migemo sticky ddskk cdb ccc csv-mode nginx-mode yaml-mode company web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data go-guru go-eldoc go-mode phpunit phpcbf php-extras php-auto-yasnippets helm-company helm-c-yasnippet fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck drupal-mode php-mode company-statistics auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete company-go nlinum smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (helm-ag-r prettier-js mustache-mode flow-minor-mode rjsx-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic jsonnet-mode sql-indent geiser racket-mode faceup dockerfile-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv feature-mode rake minitest chruby bundler inf-ruby pangu-spacing japanese-holidays evil-tutor-ja avy-migemo migemo sticky ddskk cdb ccc csv-mode nginx-mode yaml-mode company web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data go-guru go-eldoc go-mode phpunit phpcbf php-extras php-auto-yasnippets helm-company helm-c-yasnippet fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck drupal-mode php-mode company-statistics auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete company-go nlinum smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
