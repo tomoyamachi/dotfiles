@@ -1,6 +1,6 @@
 #!/bin/zsh
 php ~/programs/spreadsheetMigrater/export2phalcon.php bizshift \
-    /Users/amachi/programs/bizshift/api-bizshift/nginx/php-fpm/api-base && \
+    /Users/amachi/programs/bizshift/api-bizshift/php-fpm/api-base && \
     docker-compose exec php-fpm bash -c \
       "cd api-base && ./bin/gpl-task database generateClass" && \
     docker-compose exec php-fpm bash -c \

@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+if git_info=$(cd $1 && git status 2>/dev/null ); then
+  git_branch="$(echo $git_info | awk 'NR==1 {print $3}')"
+  case $git_info in
+    *Changes\ not\ staged* ) git_status="#[bg=colour013,fg=black] ± #[fg=default]" ;;
+    *Changes\ to\ be\ committed* ) git_status="#[bg=blue,fg=black] + #[default]" ;;
+    * ) git_status="#[bg=green,fg=black] ✔ #[default]" ;;
+  esac
+  if [[ $git_branch = "master" ]]; then
+    git_info="#[underscore]#[bg=black,fg=blue] ⭠ ${git_branch} #[default]${git_status}"
+  else
+    git_info="#[underscore]#[bg=black,fg=colour014] ⭠ ${git_branch} #[default]${git_status}"
+  fi
+else
+  git_info=""
+fi
+
+directory="#[underscore]#[bg=black,fg=cyan]$1#[default]"
+
+echo "$directory$git_info"#!/bin/zsh
+
+if git_info=$(cd $1 && git status 2>/dev/null ); then
+  git_branch="$(echo $git_info | awk 'NR==1 {print $3}')"
+  case $git_info in
+    *Changes\ not\ staged* ) git_status="#[bg=colour013,fg=black] ± #[fg=default]" ;;
+    *Changes\ to\ be\ committed* ) git_status="#[bg=blue,fg=black] + #[default]" ;;
+    * ) git_status="#[bg=green,fg=black] ✔ #[default]" ;;
+  esac
+  if [[ $git_branch = "master" ]]; then
+    git_info="#[underscore]#[bg=black,fg=blue] ⭠ ${git_branch} #[default]${git_status}"
+  else
+    git_info="#[underscore]#[bg=black,fg=colour014] ⭠ ${git_branch} #[default]${git_status}"
+  fi
+else
+  git_info=""
+fi
+
+directory="#[underscore]#[bg=black,fg=cyan]$1#[default]"
+
+echo "$directory$git_info"
