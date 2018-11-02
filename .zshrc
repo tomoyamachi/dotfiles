@@ -1,15 +1,50 @@
 ######################## 基本設定 .bash_profileとほぼ同じ
+
+case "${OSTYPE}" in
+    darwin*)
+        echo "use darwin terminal!!"
+        # installing git command
+        if [[ $(command -v git) == "" ]];then
+            # install git
+            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        fi
+        if [[ $(command -v jq) == "" ]];then
+            brew install jq
+        fi
+        if [[ $(command -v expect) == "" ]];then
+            brew install expect
+        fi
+
+        # installing anyenv
+        if [ ! -f "/Users/$USER/.anyenv/README.md" ]; then
+            git clone https://github.com/riywo/anyenv ~/.anyenv
+        fi
+        export PATH=$HOME/.anyenv/bin:$PATH
+        eval "$(anyenv init -)"
+esac
+
+# import PATH and personal commands
+[ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
+eval "$(anyenv init -)"
+
+
 local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5sum|cut -c1-2))"'m%}'
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
 [ -f ${HOME}/.zshrc.alias ] && source ${HOME}/.zshrc.alias
 eval `ssh-agent -s`
-if [ "$PASSPHRASE" != "" ]; then
-expect -c "
+
+#### ssh-add each keys
+# format JSON [{"file":"file1","pass":"pass1"},{"file":"file2","pass":"pass2"}]
+for row in $(echo "$(cat $HOME/.ssh/ssh_tables.json)" | jq -r '.[] | @base64'); do
+    _jq() {
+        echo ${row} | base64 --decode | jq -r ${1}
+    }
+    expect -c "
  set timeout -1
- spawn ssh-add $HOME/.ssh/$KEY_FILENAME
+ spawn ssh-add $HOME/.ssh/$(echo $(_jq '.file'))
  expect {
      \"Enter passphrase for\" {
-         send \"$PASSPHRASE\r\"
+         send \"$(echo $(_jq '.pass'))\r\"
      }
  }
  expect {
@@ -17,7 +52,8 @@ expect -c "
      eof { exit 0 }
  }
 "
-fi
+done
+
 
 ## emacs用の環境変数を作成
 perl -wle \
@@ -29,20 +65,6 @@ function girn() {
 }
 
 [[ $EMACS = t ]] && unsetopt zle
-
-# # rbenvの設定
-# eval "$(rbenv init - zsh)"
-# path=($HOME/.rbenv/bin(N) $path)
-# eval "$(rbenv init -)"
-# rbenv global 1.9.2-p290
-
-# #tmuxでsshが破棄されてもWindowをとじない
-# function ssh_tmux() {
-#   eval server=\${$#}
-#   tmux set set-remain-on-exit on\; \
-#       new-window -n s:$server "ssh $*"\; \
-#       set set-remain-on-exit off > /dev/null
-# }
 
 # # ホスト毎に色を変えたい場合
 # if [ "$TMUX" != "" ]; then
@@ -176,21 +198,22 @@ autoload colors
 colors
 case ${UID} in
 0)
-    PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') %B%{${fg[red]}%}%/#%{${reset_color}%}%b "
-    PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
-    SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-    ;;
-*)
     PROMPT="%{${fg[red]}%}%/%%%{${reset_color}%} "
     PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
     SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
     [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
     ;;
+
+*)
+    PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
+    PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
+    SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+    ;;
 esac
 
 case "${TERM}" in
-screen)
+screen*)
     TERM=xterm
     ;;
 esac
@@ -198,13 +221,13 @@ esac
 case "${TERM}" in
 xterm|xterm-color)
     export LSCOLORS=exfxcxdxbxegedabagacad
-    export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+    export LS_COLORS='di=44:ln=35:so=32:pi=33:ex=31:bd=46;44:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
     zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
     ;;
 kterm-color)
     stty erase '^H'
     export LSCOLORS=exfxcxdxbxegedabagacad
-    export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+    export LS_COLORS='di=44:ln=35:so=32:pi=33:ex=31:bd=46;44:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
     zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
     ;;
 kterm)
@@ -213,18 +236,17 @@ kterm)
 cons25)
     unset LANG
     export LSCOLORS=ExFxCxdxBxegedabagacad
-    export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+    export LS_COLORS='di=01;44:ln=01;35:so=01;32:ex=01;31:bd=46;44:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
     zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
     ;;
 jfbterm-color)
     export LSCOLORS=gxFxCxdxBxegedabagacad
-    export LS_COLORS='di=01;36:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+    export LS_COLORS='di=01;36:ln=01;35:so=01;32:ex=01;31:bd=46;44:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
     zstyle ':completion:*' list-colors 'di=;36;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
     ;;
 esac
 
 # set terminal title including current directory
-#
 case "${TERM}" in
 xterm|xterm-color|kterm|kterm-color)
     precmd() {
@@ -255,7 +277,6 @@ unset LSCOLORS
 case "${TERM}" in
 xterm)
     export TERM=xterm-color
-
     ;;
 kterm)
     export TERM=kterm-color
@@ -274,14 +295,6 @@ cons25)
     ;;
 
 kterm*|xterm*)
-   # Terminal.app
-# precmd() {
-# echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-# }
-    # export LSCOLORS=exfxcxdxbxegedabagacad
-    # export LSCOLORS=gxfxcxdxbxegedabagacad
-    # export LS_COLORS='di=1;34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
-
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
@@ -459,3 +472,9 @@ command /bin/mv $1 ~/.Trash/$NAME
 echo "No such file or directory: $file"
        fi
 }
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/amachi/projects/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/amachi/projects/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/amachi/projects/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/amachi/projects/google-cloud-sdk/completion.zsh.inc'; fi

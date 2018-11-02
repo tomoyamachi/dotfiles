@@ -9,6 +9,7 @@ case "${OSTYPE}" in
         alias tmux="tmuxx"
         alias ls="ls -G -w"
         alias history="fc -il 1 | peco"
+        alias k="kubectl"
         ;;
     #linux
     linux*)
@@ -22,26 +23,27 @@ esac
 source <(kubectl completion zsh)
 alias dc='docker-compose'
 alias de='docker-compose exec '
-alias k='kubectl'
-alias kg='kubectl get'
-alias kd='kubectl describe'
-alias ke='kubectl exec'
-alias ks='jsonnet -J ~/programs/kubernetes/ksonnet-lib'
-alias python='python3'
-alias pip='pip3'
-function dsh() {
-   DOCKER_COMMAND=sh
-   if [ "$1" = "php-fpm" ]; then
-     DOCKER=COMMAND=bash
-   fi
-   docker-compose exec "$1" $DOCKER_COMMAND
-}
-
 function dmake() {
    docker-compose exec php-fpm bash -c "cd api-base && make $@"
 }
 
 alias flushredis='de redis sh -c "redis-cli flushall && rm dump.rdb"'
+alias podname='kubectl get po --field-selector=status.phase==Running -o jsonpath="{.items[0].metadata.name}"'
+alias pod0='kubectl get po -o jsonpath="{.items[0].metadata.name}"'
+alias pod1='kubectl get po -o jsonpath="{.items[1].metadata.name}"'
+alias pod2='kubectl get po -o jsonpath="{.items[2].metadata.name}"'
+alias pod3='kubectl get po -o jsonpath="{.items[3].metadata.name}"'
+alias pod4='kubectl get po -o jsonpath="{.items[4].metadata.name}"'
+
+function rebuild() {
+    if [ "$1" = "" ]; then
+      echo "please set version";
+    else
+      eval $(minikube docker-env) \
+      && docker build -f Dockerfile.minikube -t api-bizcrm:v1.0.$1 . \
+      && kubectl set image deployment/bizcrm-api-deploy api=api-bizcrm:v1.0.$1
+    fi
+}
 
 function curl_task() {
     domain=http://api-amachi.bizshift.cloud/
@@ -60,6 +62,15 @@ function curl_task() {
     echo $domain$2
     curl -X POST -F "api_token=enGKZsxJuDCM3mXtMsQYTarGdgFw2Zux7KS3iJZHrbGPwFcq" \
          $domain$2
+}
+
+
+function git_push_open_pr() {
+    if [ $# -ne 3 ];then
+    	echo "1:remote 2:branch 3:pull request branch の設定をしてください"
+    else
+      git push "$1" "$2" && git-open -p "$3"
+    fi
 }
 
 ## cucumberを実行 -dオプションで返却データを出力
@@ -97,7 +108,11 @@ alias cron="sudo /etc/init.d/crond"
 alias ready='memcached restart && apc restart'
 
 # treeをインストールせずに、代替コマンドを利用
-alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
+
+if [[ $(command -v tree) == "" ]];then
+  alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
+fi
+
 
 alias hg='history 100 | grep '
 alias ql="qlmanage -p 2>/dev/null"

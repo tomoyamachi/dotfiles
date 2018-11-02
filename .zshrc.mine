@@ -1,4 +1,8 @@
-eval "$(rbenv init -)"
+export PATH=$PATH:$HOME/dotfiles/shells:$HOME/bkcd_shells:$HOME/bin
+export GOPATH=$HOME
+if [ -f "$HOME/gcloud-auth.json" ]; then
+    export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-auth.json
+fi
 
 function precmd() {
   if [ ! -z $TMUX ]; then
@@ -6,50 +10,18 @@ function precmd() {
   fi
 }
 
-# 秘密鍵ファイル
-# export KEY_FILENAME='id_dsa'
-export KEY_FILENAME='bizshift-key'
-# パスフレーズを登録すれば自動でssh-addする
-export PASSPHRASE=$(cat ~/dotfiles/ssh_password.txt)
-
-
-export PATH=$HOME/.evm/bin:$HOME/anaconda3/bin:$PATH:$HOME/dotfiles/shells:$HOME/dotfiles/gcpn_shells:$HOME/bkcd_shells:$HOME/dotfiles/bkrs_shells:$HOME/bin
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/amachi/programs/google-cloud-sdk/path.zsh.inc' ]; then
-    source '/Users/amachi/programs/google-cloud-sdk/path.zsh.inc';
+if [ -f "/Users/$USER/programs/google-cloud-sdk/path.zsh.inc" ]; then
+    source "/Users/$USER/programs/google-cloud-sdk/path.zsh.inc";
     # gcloud components install app-engine-go
     export APPENGINE_SDK="$HOME/programs/google-cloud-sdk/platform/google_appengine"
     export PATH="$PATH:$APPENGINE_SDK"
 fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc' ]; then
+    source '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc';
+fi
 
-
-export GOPATH="$HOME/go"
-export PATH="$HOME/.goenv/bin:$PATH"
-eval "$(goenv init -)"
-
-# brew install direnv
+which direnv || brew install direnv
 eval "$(direnv hook zsh)"
-export EDITOR=vim
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
-
-
-
-case "${OSTYPE}" in
-darwin*)
-    source "$HOME/programs/google-cloud-sdk/path.zsh.inc"
-    source "$HOME/programs/google-cloud-sdk/completion.zsh.inc"
-    export HOMEBREW_GITHUB_API_TOKEN="f4b37121a519bd55cbf69690c3b63360a892b012"
-
-#    [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
-#    ;;
-# linux*)
-#     # ここに設定
-#     [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
-     ;;
-esac

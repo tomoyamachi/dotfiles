@@ -1,4 +1,5 @@
 .emacs.d/auto-save-list
+*.patchfile
 *.swp
 \#*\#
 auto-save-list
