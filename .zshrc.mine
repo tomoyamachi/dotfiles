@@ -1,14 +1,17 @@
-export PATH=$PATH:$HOME/dotfiles/shells:$HOME/bkcd_shells:$HOME/bin
-export GOPATH=$HOME
+export PATH=$PATH:/usr/local/go/bin:$HOME/dotfiles/shells:$HOME/bkcd_shells:$HOME/bin
 if [ -f "$HOME/gcloud-auth.json" ]; then
     export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-auth.json
 fi
-
+export GOPATH="$HOME"
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info --bind ctrl-f:page-down,ctrl-b:page-up"
 function precmd() {
   if [ ! -z $TMUX ]; then
     tmux refresh-client -S
   fi
 }
+
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "/Users/$USER/programs/google-cloud-sdk/path.zsh.inc" ]; then
@@ -22,6 +25,50 @@ fi
 if [ -f '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc' ]; then
     source '/Users/amachi/programs/google-cloud-sdk/completion.zsh.inc';
 fi
-
-which direnv || brew install direnv
+export PATH="$PATH:$HOME/Library/Python/2.7/bin"
+# which direnv || brew install direnv
 eval "$(direnv hook zsh)"
+
+# fbr - checkout git branch (including remote branches)
+fbr() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+zle -N history-finder
+function history-finder() {
+ local src=$(fc -rnil -n 1 | fzf)
+ if [ -n "$src" ]; then
+   BUFFER=$(echo "$src" | cut -c 19-)
+   CURSOR=${#BUFFER}
+ fi
+}
+bindkey '^h' history-finder
+
+function peco-src() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
+
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N pet-select
+stty -ixon
+bindkey '^[' pet-select

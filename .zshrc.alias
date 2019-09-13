@@ -1,3 +1,4 @@
+# vim: filetype=sh
 case "${OSTYPE}" in
     # MacOSX
     darwin*)
@@ -8,7 +9,6 @@ case "${OSTYPE}" in
         alias tp="pbpaste" # Macのクリップボードにあるものをtmuxにはりつけ
         alias tmux="tmuxx"
         alias ls="ls -G -w"
-        alias history="fc -il 1 | peco"
         alias k="kubectl"
         ;;
     #linux
@@ -17,9 +17,9 @@ case "${OSTYPE}" in
         alias ee="emacsclient -n"
         alias se="sudo emacsclient -n"
         alias ls="ls --color"
-        alias history='fc -il 1'
         ;;
 esac
+
 source <(kubectl completion zsh)
 alias dc='docker-compose'
 alias de='docker-compose exec '
@@ -27,6 +27,8 @@ function dmake() {
    docker-compose exec php-fpm bash -c "cd api-base && make $@"
 }
 
+alias g='open -a GoLand'
+alias w='open -a WebStorm'
 alias flushredis='de redis sh -c "redis-cli flushall && rm dump.rdb"'
 alias podname='kubectl get po --field-selector=status.phase==Running -o jsonpath="{.items[0].metadata.name}"'
 alias pod0='kubectl get po -o jsonpath="{.items[0].metadata.name}"'
@@ -45,26 +47,6 @@ function rebuild() {
     fi
 }
 
-function curl_task() {
-    domain=http://api-amachi.bizshift.cloud/
-    if [ "$1" = "dev" ]; then
-        domain=http://api.bizshift-dev.online/
-    fi
-
-    if [ "$1" = "stg" ]; then
-        domain=http://api.bizshift-stg.online/
-    fi
-
-    if [ "$1" = "prod" ]; then
-        domain=http://api.bizshift.cloud/
-    fi
-
-    echo $domain$2
-    curl -X POST -F "api_token=enGKZsxJuDCM3mXtMsQYTarGdgFw2Zux7KS3iJZHrbGPwFcq" \
-         $domain$2
-}
-
-
 function git_push_open_pr() {
     if [ $# -ne 3 ];then
     	echo "1:remote 2:branch 3:pull request branch の設定をしてください"
@@ -73,58 +55,21 @@ function git_push_open_pr() {
     fi
 }
 
-## cucumberを実行 -dオプションで返却データを出力
-function c() {
-    D=
-    O=
-    while :
-    do
-        case $1 in
-            -d) D="DEBUG=1"
-                shift
-                ;;
-            -o) O="OUTPUT=1"
-                shift
-                ;;
-            *)  break
-                ;;
-        esac
-    done
-
-
-docker build ~/programs/bizshift/api-bizshift/cucumber/ -t api-bizshift-cucumber
-docker run -it --rm --network=apibizshift_default --link api-bizshift-webserver api-bizshift-cucumber cucumber $D $O $@
-}
-
-alias tailweb='docker-compose exec webserver sh -c "tail -f /var/log/nginx/application.*.log"'
 
 alias sudo='sudo ' # sudoでaliasを認識
-alias server='sudo service nginx' # nginxの操作
-alias memcached='sudo service memcached' # nginxの操作
-alias apc='sudo service php-fpm' # apcキャッシュ削除
-alias cache="sudo /etc/init.d/memcached"
-alias cron="sudo /etc/init.d/crond"
-
-alias ready='memcached restart && apc restart'
-
 # treeをインストールせずに、代替コマンドを利用
-
 if [[ $(command -v tree) == "" ]];then
   alias tree='pwd;find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
 fi
 
 
-alias hg='history 100 | grep '
-alias ql="qlmanage -p 2>/dev/null"
 alias reload="source $HOME/.zshrc"
 alias mute='/usr/bin/osascript -e "set volume 0"'
 alias cdcopy='pwd|pbcopy'
 alias imgdim='sips -g pixelHeight -g pixelWidth $1'
 alias gip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'" # 現在のIPアドレスを取得
 alias clock='while :; do printf "%s\r" "$(date +%T)"; sleep 1 ; done' # 時計
-alias server='sudo service nginx'
 
-alias h='cd ~' # go to home directory
 alias pa='ps auxwwww'
 alias pspgid='ps axwww -o "ppid pgid pid user fname args"'
 alias iops='ps auxwwww -L|awk "\$10 ~ /(D|STAT)/{print}"'
@@ -165,7 +110,6 @@ if [ `uname` = "Darwin" ]; then
   alias excel='open -a "Microsoft Excel" '
 fi
 alias -s {png,jpg,bmp,PNG,JPG,BMP}=eog
-alias -s html=vivaldi
 
 export SHUTDOWN_CONFIRM_FLAG=0
 alias where="command -v"

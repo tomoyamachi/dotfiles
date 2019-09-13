@@ -26,9 +26,9 @@ esac
 # import PATH and personal commands
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
 eval "$(anyenv init -)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5sum|cut -c1-2))"'m%}'
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
 [ -f ${HOME}/.zshrc.alias ] && source ${HOME}/.zshrc.alias
 eval `ssh-agent -s`
@@ -478,3 +478,11 @@ if [ -f '/Users/amachi/projects/google-cloud-sdk/path.zsh.inc' ]; then source '/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/amachi/projects/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/amachi/projects/google-cloud-sdk/completion.zsh.inc'; fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
