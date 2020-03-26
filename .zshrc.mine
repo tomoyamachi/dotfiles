@@ -1,4 +1,4 @@
-export PATH=$PATH:/usr/local/go/bin:$HOME/dotfiles/shells:$HOME/bkcd_shells:$HOME/bin
+export PATH=/usr/local/bin:$PATH:/usr/local/go/bin:$HOME/dotfiles/shells:$HOME/bkcd_shells:$HOME/bin
 if [ -f "$HOME/gcloud-auth.json" ]; then
     export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-auth.json
 fi
@@ -8,6 +8,16 @@ function precmd() {
   if [ ! -z $TMUX ]; then
     tmux refresh-client -S
   fi
+}
+
+alias today="date +%Y-%m-%d"
+alias yday="date -v -1d +%Y-%m-%d"
+
+function cdd() {
+  cd ~/Downloads/$(date +%Y-%m-%d)
+}
+function odd() {
+  open ~/Downloads/$(date +%Y-%m-%d)
 }
 
 export NVM_DIR=$HOME/.nvm
@@ -48,16 +58,18 @@ function history-finder() {
 }
 bindkey '^h' history-finder
 
-function peco-src() {
-  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+function ghq-fzf() {
+  #local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  local src=$(ghq list | fzf --preview "ls -laTp $(ghq root)/{} | tail -n+4 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
+  #local src=$(ghq list | fzf --preview "git --git-dir $(ghq root)/{}/.git log --date=short --pretty=format:'-%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --color")
   if [ -n "$src" ]; then
     BUFFER="cd $(ghq root)/$src"
     zle accept-line
   fi
   zle -R -c
 }
-zle -N peco-src
-bindkey '^]' peco-src
+zle -N ghq-fzf
+bindkey '^]' ghq-fzf
 
 function prev() {
   PREV=$(fc -lrn | head -n 1)
@@ -72,3 +84,4 @@ function pet-select() {
 zle -N pet-select
 stty -ixon
 bindkey '^[' pet-select
+export GPG_TTY=$(tty)

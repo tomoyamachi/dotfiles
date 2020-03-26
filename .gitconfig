@@ -45,9 +45,22 @@
     dc = diff --cached
     wc = whatchanged
     unstage = reset HEAD
+    push-f = push --force-with-lease
 [tig "bind"]
-  generic = g move-first-line
-  generic = G move-last-line
+    generic = g move-first-line
+    generic = G move-last-line
 [user]
-	name = Tomoya AMACHI
-	email = tomoya.amachi@gmail.com
+    name = Tomoya AMACHI
+    email = tomoya.amachi@gmail.com
+    signingkey = F37EC01B0043942F
+[commit]
+    gpgsign = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[ghq]
+	root = /Users/amachi/src
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

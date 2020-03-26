@@ -11,5 +11,7 @@ auto-save-list
 GTAGS
 GPATH
 GRTAGS
-composer.lock
 ssh_password.txt
+.spacemacs
+archive-contents
+*shellenv.el
