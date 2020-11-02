@@ -1,0 +1,7 @@
+#!/bin/bash
+profile_name=default
+file_name=~/Downloads/download-by-extension.txt
+grep --color=never -A 3 $profile_name $file_name | grep -v $profile_name | while read -r key eq value; do
+  key=$(echo $key | tr [:lower:] [:upper:])
+  echo "export $key=$value"
+done
